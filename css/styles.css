@@ -1,363 +1,56 @@
 /* ----------------------------------------------------------------
-   REFONTE ESTHÉTIQUE : Thème Sombre Doux et Épuré
-   Utilise la police 'Inter' (via un lien dans le HTML idéalement,
-   ou un un fallback moderne comme system-ui) pour la lisibilité,
-   et des couleurs apaisantes.
+    FEUILLE DE STYLE INITIALE (BASE NEUTRE)
+    Ceci est la feuille de style réinitialisée, prête à recevoir vos règles.
 ---------------------------------------------------------------- */
 
-:root {
-  /* Définition des variables de couleurs pour une gestion facile */
-  --color-dark: #1f2937;          /* Gris foncé (fond principal) */
-  --color-light: #f9fafb;         /* Presque blanc (texte principal) */
-  --color-accent: #3b82f6;        /* Bleu vif (éléments clés, liens) */
-  --color-secondary-bg: #374151;  /* Gris moyen (sections, cartes) */
-  --color-border: #4b5563;        /* Gris des bordures subtil */
-  --nav-width: 200px;             /* Nouvelle variable pour la largeur de la barre de navigation latérale */
-}
-
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 16px; /* Taille standard pour un meilleur confort de lecture */
-  line-height: 1.6;
-  background-color: var(--color-dark);
-  color: var(--color-light);
-  /* Le padding droit et bas est de 20px, mais le padding gauche doit être la largeur de la barre de nav */
-  padding: 20px 20px 20px var(--nav-width);
-  margin: 0;
-  /* Suppression de l'ancienne marge du haut */
-  /* padding-top: 70px; */ 
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0; /* Fond clair par défaut */
+    color: #333; /* Texte sombre par défaut */
 }
 
-/* --- EN-TÊTE --- */
-header h1 {
-  font-family: inherit; /* Utilise la police du body */
-  font-size: 2.5em;
-  background-color: var(--color-secondary-bg);
-  color: var(--color-light);
-  text-align: center;
-  border: 1px solid var(--color-border);
-  border-radius: 8px; /* Coins arrondis pour la modernité */
-  padding: 15px 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre légère */
-}
-
-/* --- NAVIGATION (Barre latérale fixe) --- */
-nav {
-  /* Fixe la barre de navigation à gauche de la page */
-  position: fixed;
-  top: 0;
-  left: 0;
-  /* Utilisation de la variable de largeur */
-  width: var(--nav-width); 
-  /* Hauteur pleine vue */
-  height: 100vh; 
-  background-color: var(--color-secondary-bg);
-  z-index: 1000;
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5); /* Ombre sur la droite */
-  
-  /* Ajustements du style */
-  padding: 0; 
-  border-bottom: none; /* Plus de bordure du bas */
-}
-
-/* Stylisation de la liste principale dans la navigation */
-nav ul {
-  list-style-type: none; /* S'assurer qu'aucune puce n'est visible pour la liste principale */
-  margin: 0;
-  padding: 10px 0;
-  /* Les éléments de la liste sont affichés verticalement */
-  display: block; 
-}
-
-/* Ajout d'une règle générale pour supprimer toutes les décorations de liste dans la nav */
-nav li {
-  list-style: none; /* Supprime les décorations de tous les éléments de liste dans la nav */
-  position: relative; /* Point de référence pour le menu déroulant */
-}
-
-a {
-  font-size: 1em;
-  font-variant: normal; 
-  background-color: transparent;
-  color: var(--color-light); 
-  text-decoration: none;
-  padding: 15px 20px; 
-  transition: all 0.3s ease; 
-  border-radius: 0; 
-  display: block;
-}
-
-a:hover, a:focus {
-  background-color: var(--color-accent);
-  color: var(--color-dark); 
-  text-decoration: none; 
-}
-
-/* --- Dropdown Logic (Liste qui se déplie au survol) --- */
-nav li ul {
-  /* Le sous-menu par défaut est caché */
-  display: none; 
-  
-  /* Positionnement pour le placer sur la droite de l'élément parent */
-  position: absolute;
-  top: 0; /* Aligné avec le haut du lien parent */
-  left: var(--nav-width); /* Décalé vers la droite de la barre de navigation */
-  
-  /* Style du conteneur du sous-menu */
-  background-color: var(--color-secondary-bg);
-  min-width: 180px;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); /* Ombre pour flotter sur le contenu */
-  border-radius: 4px;
-  z-index: 2000;
-  padding: 5px 0;
-}
-
-/* Règle de survol pour afficher le sous-menu */
-nav li:hover > ul {
-  display: block; /* Le sous-menu apparaît au survol de son parent li */
-}
-
-nav li ul li {
-  /* Réinitialisation de la position pour les éléments de la sous-liste */
-  position: static;
-}
-
-nav li ul li a {
-  /* Les liens du sous-menu sont alignés à gauche et ont moins de padding */
-  padding: 10px 15px;
-  text-align: left;
-  color: var(--color-light);
-  width: 100%;
-  white-space: nowrap; /* Empêche le texte de se briser */
-}
-
-nav li ul li a:hover {
-  background-color: var(--color-accent);
-  color: var(--color-dark);
-}
-
-/* --- SECTIONS ET CONTENU --- */
-section {
-  background-color: var(--color-secondary-bg);
-  border: none;
-  border-radius: 8px;
-  padding: 30px;
-  margin-bottom: 25px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-h2, h3 {
-  color: var(--color-accent); /* Titres en couleur accent */
-  text-align: left;
-  border-bottom: 2px solid var(--color-accent);
-  padding-bottom: 5px;
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-p {
-  margin-left: 0;
-  text-align: justify;
-  padding-right: 0;
-  margin-bottom: 1em;
-}
-
-/* --- LISTES --- */
-ul, ol {
-  padding-left: 20px;
-  font-size: 1em; /* Réinitialisation de la taille pour la cohérence */
-}
-
-ul {
-  list-style-type: disc; /* Revenir à la liste à puces par défaut pour la lisibilité */
-}
-
-li > ul {
-  list-style-type: circle; /* Carrés remplacés par des cercles vides */
-}
-
-ol {
-  list-style-type: decimal; /* Chiffres arabes par défaut, les romains sont moins courants */
-  list-style-position: outside;
-}
-
-/* --- IMAGES --- */
-img {
-  width: 100%; /* Occupation de la pleine largeur de son conteneur */
-  max-width: 300px; /* Limiter la taille maximale pour ne pas être écrasant */
-  height: auto;
-  display: block;
-  margin: 20px auto; /* Centrer l'image */
-  border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* --- TABLEAU --- */
-table {
-  width: 100%;
-  border: 1px solid var(--color-border);
-  border-collapse: collapse;
-  font-weight: normal;
-  margin-top: 20px;
-  border-radius: 8px;
-  overflow: hidden; /* Assure que les coins arrondis sont appliqués */
-}
-
-th, td {
-  border: 1px solid var(--color-border); /* Bordures simples et claires */
-  padding: 12px;
-  text-align: left;
-}
-
-th {
-  background-color: var(--color-accent);
-  color: var(--color-dark);
-  font-weight: bold;
-}
-
-tr:nth-child(even) { /* '2n' est équivalent à 'even' */
-  color: var(--color-light);
-  background: var(--color-dark); /* Contraste clair sur fond très sombre */
-}
-
-/* --- PIED DE PAGE --- */
-footer p {
-  border: none;
-  border-top: 1px solid var(--color-border); /* Séparateur subtil */
-  padding-top: 10px;
-  margin-top: 40px;
-  text-align: right;
-  font-size: 0.9em; /* Taille plus petite, lisible (l'ancienne était invalide) */
-  font-style: italic;
-  color: var(--color-border); /* Texte estompé */
-}
-
-
-/* ========================================================================= */
-/* --- STYLES FORMULAIRE (Ajout pour la lisibilité dans le thème sombre) --- */
-/* ========================================================================= */
+/* Base Formulaire */
 form div {
-    display: flex;
-    flex-direction: column;
     margin-bottom: 15px;
-    padding: 15px; /* Augmenté pour un look plus doux */
-    border: 1px solid var(--color-border);
-    border-radius: 8px; /* Coins arrondis du thème doux */
-    background-color: var(--color-dark); /* Fond du champ plus sombre que la section */
 }
-
-/* Alignement en ligne sur écrans plus larges */
-@media (min-width: 600px) {
-    form div:not(:last-child) {
-        flex-direction: row;
-        align-items: center;
-    }
-}
-
 
 label {
-    min-width: 150px; 
+    display: block;
     margin-bottom: 5px;
-    font-weight: 600;
-    color: var(--color-light);
+    font-weight: bold;
 }
 
+/* Base pour la mise en page simple */
 @media (min-width: 600px) {
+    form div:not(:last-child) {
+        display: flex;
+        align-items: flex-start; /* Alignement en haut des éléments */
+    }
     label {
-        margin-bottom: 0;
+        min-width: 150px; 
         margin-right: 15px;
+        margin-bottom: 0;
+        padding-top: 8px; /* Petite marge pour l'alignement avec les inputs */
+    }
+    input[type="text"], input[type="tel"], input[type="email"], input[type="number"], textarea, select {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    textarea {
+        height: 80px; /* Hauteur par défaut pour une meilleure visibilité */
     }
 }
 
-
-/* Style général pour les éléments de formulaire (input, textarea, select) */
-input[type="text"], input[type="tel"], textarea, select {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid var(--color-border); 
-    border-radius: 4px;
-    background-color: var(--color-secondary-bg); /* Rend les champs plus clairs que le fond du div parent */
-    color: var(--color-light);
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-input[type="text"]:focus, input[type="tel"]:focus, textarea:focus, select:focus {
-    border-color: var(--color-accent); /* Bleu vif au focus */
-    box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); /* Ombre douce au focus */
-    outline: none;
-    background-color: #495567; /* Légèrement plus clair au focus pour le feedback */
-}
-
-/* Style des boutons submit/reset */
-input[type="submit"], input[type="reset"] {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px; 
-    cursor: pointer;
-    font-weight: 700;
-    transition: background-color 0.3s;
-    margin: 5px;
-}
-
-input[type="submit"] {
-    background-color: var(--color-accent); 
-    color: var(--color-light);
-}
-
-input[type="submit"]:hover {
-    background-color: #2563eb;
-}
-
-input[type="reset"] {
-    background-color: var(--color-border);
-    color: var(--color-light);
-}
-
-input[type="reset"]:hover {
-    background-color: #6b7280; 
-}
 
 /* Style des spans d'erreur */
 span[id^="saisie"] {
     display: block;
-    margin-top: 5px;
+    color: red; 
     font-size: 0.9em;
-    color: #ff6347; /* Rouge/Orange pour les erreurs dans un thème doux */
     font-style: italic;
-    font-weight: 400;
-}
-
-
-/* ========================================================================= */
-/* --- RESPONSIVE MOBILE (La navigation latérale doit disparaître) --- */
-/* ========================================================================= */
-@media (max-width: 768px) {
-    body {
-        /* Suppression du padding gauche forcé pour la nav latérale */
-        padding-left: 20px; 
-    }
-
-    /* Masquer la navigation latérale et la remplacer par un menu en haut */
-    nav {
-        /* Transforme la nav latérale en barre horizontale non fixe pour l'instant */
-        position: static;
-        width: 100%;
-        height: auto;
-        box-shadow: none;
-        margin-bottom: 20px;
-    }
-
-    /* Adapter le header/section pour les petites résolutions */
-    header h1 {
-        font-size: 1.8em;
-        text-align: left;
-        padding: 10px;
-    }
-
-    /* Corriger l'alignement des champs du formulaire en mobile */
-    form div:not(:last-child) {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+    margin-top: 5px;
 }
