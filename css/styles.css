@@ -1,15 +1,16 @@
 /* ----------------------------------------------------------------
     REFONTE ESTHÉTIQUE : Thème Sombre Officiel et Structuré
-    Utilise des couleurs formelles (Marine, Gris foncé) et des lignes nettes.
+    Basé sur la charte graphique de l'État français (Bleu République).
 ---------------------------------------------------------------- */
 
 :root {
-  /* Définition des variables de couleurs pour un look Officiel */
-  --color-dark: #1a202c;          /* Gris foncé/Marine Profond (fond principal) */
+  /* Définition des variables de couleurs pour un look Officiel Français */
+  --color-dark: #0f172a;          /* Bleu très foncé/Noir subtil (fond principal) */
   --color-light: #f9fafb;         /* Presque blanc (texte principal) */
-  --color-accent: #2c5282;        /* Bleu/Navy Formel (éléments clés, boutons) */
-  --color-secondary-bg: #2d3748;  /* Gris Ardoise Sombre (sections, cartes, nav) */
-  --color-border: #4a5568;        /* Gris des bordures nettes */
+  --color-accent: #000091;        /* Bleu/Navy "Bleu République" (élément clé, en-tête) */
+  --color-secondary-bg: #1e293b;  /* Gris Ardoise Sombre (sections, cartes, nav) */
+  --color-border: #475569;        /* Gris des bordures nettes et sobres */
+  --color-highlight: #e1000f;     /* Rouge (pour un usage très spécifique ou survol) */
   --nav-width: 200px;
 }
 
@@ -28,14 +29,14 @@ body {
 header h1 {
   font-family: inherit;
   font-size: 2.5em;
-  background-color: var(--color-accent); /* Utilisation du bleu marine formel */
+  background-color: var(--color-accent); /* Bleu République */
   color: var(--color-light);
   text-align: center;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border: 1px solid var(--color-dark); /* Bordure très foncée */
+  border-radius: 4px; /* Plus carré, plus institutionnel */
   padding: 15px 20px;
   margin-bottom: 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* --- NAVIGATION (Barre latérale fixe) --- */
@@ -47,7 +48,7 @@ nav {
   height: 100vh; 
   background-color: var(--color-secondary-bg);
   z-index: 1000;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4); /* Ombre légère et nette */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4);
   padding: 0; 
   border-bottom: none;
 }
@@ -75,12 +76,12 @@ a {
   padding: 15px 20px; 
   transition: all 0.3s ease; 
   display: block;
-  border-bottom: 1px solid var(--color-border); /* Séparateur net entre les liens */
+  border-bottom: 1px solid var(--color-border); /* Séparateur net */
 }
 
 a:hover, a:focus {
   background-color: var(--color-dark); /* Fond très sombre au survol */
-  color: var(--color-accent);  /* Texte en couleur accent au survol */
+  color: var(--color-accent);  /* Texte en Bleu République au survol */
   text-decoration: none; 
 }
 
@@ -109,7 +110,7 @@ nav li ul li a {
   color: var(--color-light);
   width: 100%;
   white-space: nowrap;
-  border-bottom: none; /* Pas de séparateur dans le sous-menu */
+  border-bottom: none;
 }
 
 nav li ul li a:hover {
@@ -120,17 +121,17 @@ nav li ul li a:hover {
 /* --- SECTIONS ET CONTENU --- */
 section {
   background-color: var(--color-secondary-bg);
-  border: 1px solid var(--color-border); /* Bordure définie */
-  border-radius: 4px; /* Coins légèrement moins arrondis pour plus de formalité */
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
   padding: 30px;
   margin-bottom: 25px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 h2, h3 {
-  color: var(--color-accent);
+  color: var(--color-accent); /* Titres en Bleu République */
   text-align: left;
-  border-bottom: 2px solid var(--color-border); /* Ligne de séparation subtile mais solide */
+  border-bottom: 2px solid var(--color-border);
   padding-bottom: 8px;
   margin-top: 0;
   margin-bottom: 20px;
@@ -160,7 +161,7 @@ form div {
     padding: 10px;
     border: 1px solid var(--color-border);
     border-radius: 4px;
-    background-color: var(--color-secondary-bg); /* Forme de carte plus claire que le fond */
+    background-color: var(--color-secondary-bg);
 }
 
 /* Alignement en ligne sur écrans plus larges */
@@ -191,17 +192,16 @@ label {
 input[type="text"], input[type="tel"], textarea, select {
     flex-grow: 1;
     padding: 10px;
-    border: 1px solid #6b7280; /* Bordure légèrement plus claire pour séparer du fond */
+    border: 1px solid var(--color-border); /* Bordure sobre */
     border-radius: 4px;
-    /* CHANGEMENT CLÉ : Utiliser le gris ardoise pour que le champ se démarque du fond du body */
-    background-color: var(--color-secondary-bg); 
+    background-color: var(--color-dark); /* Plus sombre pour mieux démarquer le champ */
     color: var(--color-light);
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 input[type="text"]:focus, input[type="tel"]:focus, textarea:focus, select:focus {
-    border-color: var(--color-accent); /* Bordure bleue */
-    box-shadow: 0 0 5px rgba(44, 82, 130, 0.8); /* Ombre plus visible au focus */
+    border-color: var(--color-accent); /* Bleu République au focus */
+    box-shadow: 0 0 5px rgba(0, 0, 145, 0.8); /* Ombre nette */
     outline: none;
 }
 
@@ -217,12 +217,12 @@ input[type="submit"], input[type="reset"] {
 }
 
 input[type="submit"] {
-    background-color: var(--color-accent);
-    color: var(--color-light); /* Texte clair sur fond bleu formel */
+    background-color: var(--color-accent); /* Bouton principal en Bleu République */
+    color: var(--color-light);
 }
 
 input[type="submit"]:hover {
-    background-color: #1e3a8a; /* Bleu plus foncé au survol */
+    background-color: #000078; /* Bleu légèrement plus foncé au survol */
 }
 
 input[type="reset"] {
@@ -239,7 +239,7 @@ span[id^="saisie"] {
     display: block;
     margin-top: 5px;
     font-size: 0.9em;
-    color: #ef4444;
+    color: var(--color-highlight); /* Utilisation du rouge pour les erreurs (Rouge République) */
     font-style: italic;
 }
 
