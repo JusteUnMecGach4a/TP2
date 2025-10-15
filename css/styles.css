@@ -21,7 +21,70 @@ body {
     color: var(--color-text); 
 }
 
-/* Base Formulaire et Sections */
+/* --- NAVIGATION MODERNE --- */
+nav {
+    background-color: var(--color-surface);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    margin: 0 auto 30px auto; /* Centrer et espacer du contenu */
+    padding: 0 15px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Alignement horizontal */
+    justify-content: center; /* Centrer les liens */
+    flex-wrap: wrap; /* Assurer la réactivité sur petits écrans */
+}
+
+nav li {
+    position: relative;
+}
+
+nav a {
+    display: block;
+    padding: 12px 18px;
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 4px;
+}
+
+nav a:hover, nav a:focus {
+    background-color: var(--color-accent);
+    color: var(--color-background); /* Texte sombre sur fond accentué */
+}
+
+/* Sous-menu (Dropdown) */
+nav li ul {
+    display: none;
+    position: absolute;
+    top: 100%; /* Sous l'élément parent */
+    left: 0;
+    background-color: var(--color-surface);
+    min-width: 180px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    border-radius: 4px;
+    /* Réinitialisation pour le sous-menu */
+    flex-direction: column; 
+    justify-content: flex-start;
+}
+
+nav li:hover > ul {
+    display: flex;
+}
+
+nav li ul a {
+    padding: 10px 15px;
+    font-weight: normal;
+}
+
+/* --- Base Formulaire et Sections --- */
 form div {
     margin-bottom: 15px;
     padding: 10px;
