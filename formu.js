@@ -109,6 +109,12 @@ var setupOnBlurListeners = () => {
             element.addEventListener('blur', () => afficheOubli(field.id, field.spanId));
         }
     });
+    
+    // Ajout d'un écouteur sur la checkbox pour effacer/valider l'email immédiatement
+    var newsCheckbox = document.getElementsByName("news")[0];
+    if (newsCheckbox) {
+        newsCheckbox.addEventListener('change', () => afficheOubli('adresseMail', 'saisieAdresseMail'));
+    }
 };
 
 
@@ -120,13 +126,6 @@ function verification(event) {
     // Empêche la soumission par défaut du formulaire (rechargement de la page).
     if (event) {
         event.preventDefault();
-    }
-
-    // Configure les écouteurs onblur une seule fois si ce n'est pas déjà fait
-    // On s'assure que cette configuration est faite pour la validation immédiate
-    if (typeof verification.listenersSetup === 'undefined') {
-        setupOnBlurListeners();
-        verification.listenersSetup = true; // Marque le setup comme effectué
     }
     
     // 1. Récupération des valeurs des champs simples (getElementById)
@@ -321,3 +320,6 @@ function verification(event) {
         }
     }
 }
+
+// Correction du problème: installer les écouteurs dès que la page est prête.
+document.addEventListener('DOMContentLoaded', setupOnBlurListeners);
