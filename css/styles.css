@@ -68,15 +68,16 @@ nav {
 
 /* Stylisation de la liste principale dans la navigation */
 nav ul {
-  list-style-type: none;
+  list-style-type: none; /* S'assurer qu'aucune puce n'est visible pour la liste principale */
   margin: 0;
   padding: 10px 0;
   /* Les éléments de la liste sont affichés verticalement */
   display: block; 
 }
 
-/* Les éléments de la liste principale */
+/* Ajout d'une règle générale pour supprimer toutes les décorations de liste dans la nav */
 nav li {
+  list-style: none; /* Supprime les décorations de tous les éléments de liste dans la nav */
   position: relative; /* Point de référence pour le menu déroulant */
 }
 
