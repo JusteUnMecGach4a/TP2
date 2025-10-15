@@ -20,11 +20,11 @@ function verification() {
     let adresseMail = document.getElementById("adresseMail").value;
 
     // 2. Récupération de la Catégorie Socio-Professionnelle (radio - getElementsByName)
+    // Consigne TP: getElementsByName renvoie un tableau de 5 valeurs gérées dans une boucle (for).
     let professionRadios = document.getElementsByName("profession");
     let professionChoisie = "Non spécifié";
 
     // Parcourir le tableau des éléments radio pour trouver celui qui est 'checked'
-    // Consigne TP: "vous gerez dans une boucle (for)"
     for (let i = 0; i < professionRadios.length; i++) {
         if (professionRadios[i].checked) {
             professionChoisie = professionRadios[i].value;
