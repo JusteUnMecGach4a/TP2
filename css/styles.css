@@ -1,180 +1,250 @@
 /* ----------------------------------------------------------------
-    REFONTE ESTHÉTIQUE : Thème Sombre Officiel - Style GOUV.FR
-    Basé sur la charte graphique de l'État français (Bleu République) avec un fond sombre.
-    -> V2: Amélioration massive de la LISIBILITÉ et du CONTRASTE.
+   REFONTE ESTHÉTIQUE : Thème Sombre Doux et Épuré
+   Utilise la police 'Inter' (via un lien dans le HTML idéalement,
+   ou un un fallback moderne comme system-ui) pour la lisibilité,
+   et des couleurs apaisantes.
 ---------------------------------------------------------------- */
 
 :root {
-  /* Définition des variables de couleurs pour un look GOUV.FR en sombre */
-  --color-dark: #242436;          /* Nouveau Fond principal plus clair pour meilleur contraste (base) */
-  --color-light: #ffffff;         /* Blanc pur pour la lisibilité du texte principal */
-  --color-accent: #000091;        /* Bleu République */
-  --color-secondary-bg: #131a28;  /* Fond des sections plus sombre (crée un meilleur contraste avec le body) */
-  --color-border: #6a7b95;        /* Gris bleu pour les bordures, rendu plus visible */
-  --color-highlight: #e1000f;     /* Rouge (pour les erreurs) */
-  --nav-width: 200px;
+  /* Définition des variables de couleurs pour une gestion facile */
+  --color-dark: #1f2937;          /* Gris foncé (fond principal) */
+  --color-light: #f9fafb;         /* Presque blanc (texte principal) */
+  --color-accent: #3b82f6;        /* Bleu vif (éléments clés, liens) */
+  --color-secondary-bg: #374151;  /* Gris moyen (sections, cartes) */
+  --color-border: #4b5563;        /* Gris des bordures subtil */
+  --nav-width: 200px;             /* Nouvelle variable pour la largeur de la barre de navigation latérale */
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  background-color: var(--color-dark);
-  color: var(--color-light);
-  /* Le padding gauche est réservé à la barre de navigation */
-  padding: 20px 20px 20px var(--nav-width);
-  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 16px; /* Taille standard pour un meilleur confort de lecture */
+  line-height: 1.6;
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  /* Le padding droit et bas est de 20px, mais le padding gauche doit être la largeur de la barre de nav */
+  padding: 20px 20px 20px var(--nav-width);
+  margin: 0;
+  /* Suppression de l'ancienne marge du haut */
+  /* padding-top: 70px; */ 
 }
 
-/* --- EN-TÊTE (Bannière Formelle) --- */
-header {
-    /* Style de la bannière complète */
-    border-bottom: 4px solid var(--color-accent); /* Bande Bleu République institutionnelle */
-    background-color: var(--color-secondary-bg);
-    padding: 0;
-}
-
+/* --- EN-TÊTE --- */
 header h1 {
-  font-family: inherit;
-  font-size: 2.5em;
-  background-color: transparent; /* Titre sur fond secondaire pour l'espace */
-  color: var(--color-light);
-  text-align: left;
-  border: none;
-  border-radius: 0; 
-  padding: 15px 20px;
-  margin: 0;
-  box-shadow: none;
+  font-family: inherit; /* Utilise la police du body */
+  font-size: 2.5em;
+  background-color: var(--color-secondary-bg);
+  color: var(--color-light);
+  text-align: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px; /* Coins arrondis pour la modernité */
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre légère */
 }
 
 /* --- NAVIGATION (Barre latérale fixe) --- */
 nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: var(--nav-width); 
-  height: 100vh; 
-  background-color: var(--color-secondary-bg);
-  z-index: 1000;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4);
-  padding: 0; 
-  border-right: 2px solid var(--color-border); /* Bordure latérale nette */
-  border-bottom: none;
+  /* Fixe la barre de navigation à gauche de la page */
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* Utilisation de la variable de largeur */
+  width: var(--nav-width); 
+  /* Hauteur pleine vue */
+  height: 100vh; 
+  background-color: var(--color-secondary-bg);
+  z-index: 1000;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5); /* Ombre sur la droite */
+  
+  /* Ajustements du style */
+  padding: 0; 
+  border-bottom: none; /* Plus de bordure du bas */
 }
 
 /* Stylisation de la liste principale dans la navigation */
 nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 10px 0;
-  display: block; 
+  list-style-type: none; /* S'assurer qu'aucune puce n'est visible pour la liste principale */
+  margin: 0;
+  padding: 10px 0;
+  /* Les éléments de la liste sont affichés verticalement */
+  display: block; 
 }
 
 /* Ajout d'une règle générale pour supprimer toutes les décorations de liste dans la nav */
 nav li {
-  list-style: none;
-  position: relative;
+  list-style: none; /* Supprime les décorations de tous les éléments de liste dans la nav */
+  position: relative; /* Point de référence pour le menu déroulant */
 }
 
 a {
-  font-size: 1em;
-  font-variant: normal; 
-  background-color: transparent;
-  color: var(--color-light); 
-  text-decoration: none;
-  padding: 15px 20px; 
-  transition: all 0.3s ease; 
-  display: block;
-  border-bottom: 1px solid var(--color-dark); /* Séparateur avec le fond du body (plus contrasté) */
+  font-size: 1em;
+  font-variant: normal; 
+  background-color: transparent;
+  color: var(--color-light); 
+  text-decoration: none;
+  padding: 15px 20px; 
+  transition: all 0.3s ease; 
+  border-radius: 0; 
+  display: block;
 }
 
 a:hover, a:focus {
-  background-color: var(--color-dark); /* Fond du body au survol */
-  color: var(--color-accent);  /* Texte en Bleu République au survol */
-  text-decoration: none; 
-  border-left: 5px solid var(--color-accent); /* Indicateur actif/survol officiel */
-  padding-left: 15px; /* Compense le décalage de la bordure */
+  background-color: var(--color-accent);
+  color: var(--color-dark); 
+  text-decoration: none; 
 }
 
 /* --- Dropdown Logic (Liste qui se déplie au survol) --- */
 nav li ul {
-  display: none; 
-  position: absolute;
-  top: 0;
-  left: var(--nav-width);
-  background-color: var(--color-secondary-bg);
-  min-width: 180px;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
-  border-radius: 2px; /* Très peu arrondi */
-  z-index: 2000;
-  padding: 5px 0;
+  /* Le sous-menu par défaut est caché */
+  display: none; 
+  
+  /* Positionnement pour le placer sur la droite de l'élément parent */
+  position: absolute;
+  top: 0; /* Aligné avec le haut du lien parent */
+  left: var(--nav-width); /* Décalé vers la droite de la barre de navigation */
+  
+  /* Style du conteneur du sous-menu */
+  background-color: var(--color-secondary-bg);
+  min-width: 180px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); /* Ombre pour flotter sur le contenu */
+  border-radius: 4px;
+  z-index: 2000;
+  padding: 5px 0;
 }
 
 /* Règle de survol pour afficher le sous-menu */
 nav li:hover > ul {
-  display: block;
+  display: block; /* Le sous-menu apparaît au survol de son parent li */
+}
+
+nav li ul li {
+  /* Réinitialisation de la position pour les éléments de la sous-liste */
+  position: static;
 }
 
 nav li ul li a {
-  padding: 10px 15px;
-  text-align: left;
-  color: var(--color-light);
-  width: 100%;
-  white-space: nowrap;
-  border-bottom: none;
-  border-left: none;
+  /* Les liens du sous-menu sont alignés à gauche et ont moins de padding */
+  padding: 10px 15px;
+  text-align: left;
+  color: var(--color-light);
+  width: 100%;
+  white-space: nowrap; /* Empêche le texte de se briser */
 }
 
 nav li ul li a:hover {
-  background-color: var(--color-dark);
-  color: var(--color-light);
+  background-color: var(--color-accent);
+  color: var(--color-dark);
 }
 
 /* --- SECTIONS ET CONTENU --- */
 section {
-  background-color: var(--color-secondary-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 2px; /* Style institutionnel */
-  padding: 30px;
-  margin-bottom: 25px;
-  box-shadow: none; /* Moins d'ombre, plus de netteté */
+  background-color: var(--color-secondary-bg);
+  border: none;
+  border-radius: 8px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 h2, h3 {
-  color: var(--color-accent); /* Titres en Bleu République */
-  text-align: left;
-  border-bottom: 2px solid var(--color-border);
-  padding-bottom: 8px;
-  margin-top: 0;
-  margin-bottom: 20px;
+  color: var(--color-accent); /* Titres en couleur accent */
+  text-align: left;
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 5px;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+p {
+  margin-left: 0;
+  text-align: justify;
+  padding-right: 0;
+  margin-bottom: 1em;
+}
+
+/* --- LISTES --- */
+ul, ol {
+  padding-left: 20px;
+  font-size: 1em; /* Réinitialisation de la taille pour la cohérence */
+}
+
+ul {
+  list-style-type: disc; /* Revenir à la liste à puces par défaut pour la lisibilité */
+}
+
+li > ul {
+  list-style-type: circle; /* Carrés remplacés par des cercles vides */
+}
+
+ol {
+  list-style-type: decimal; /* Chiffres arabes par défaut, les romains sont moins courants */
+  list-style-position: outside;
+}
+
+/* --- IMAGES --- */
+img {
+  width: 100%; /* Occupation de la pleine largeur de son conteneur */
+  max-width: 300px; /* Limiter la taille maximale pour ne pas être écrasant */
+  height: auto;
+  display: block;
+  margin: 20px auto; /* Centrer l'image */
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* --- TABLEAU --- */
+table {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-collapse: collapse;
+  font-weight: normal;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden; /* Assure que les coins arrondis sont appliqués */
+}
+
+th, td {
+  border: 1px solid var(--color-border); /* Bordures simples et claires */
+  padding: 12px;
+  text-align: left;
+}
+
 th {
-  background-color: var(--color-accent);
-  color: var(--color-light);
-  font-weight: bold;
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+  font-weight: bold;
+}
+
+tr:nth-child(even) { /* '2n' est équivalent à 'even' */
+  color: var(--color-light);
+  background: var(--color-dark); /* Contraste clair sur fond très sombre */
 }
 
 /* --- PIED DE PAGE --- */
 footer p {
-  border-top: 1px solid var(--color-border);
-  color: var(--color-border);
-  text-align: center; /* Centré pour le look officiel */
+  border: none;
+  border-top: 1px solid var(--color-border); /* Séparateur subtil */
+  padding-top: 10px;
+  margin-top: 40px;
+  text-align: right;
+  font-size: 0.9em; /* Taille plus petite, lisible (l'ancienne était invalide) */
+  font-style: italic;
+  color: var(--color-border); /* Texte estompé */
 }
 
 
 /* ========================================================================= */
-/* --- STYLES FORMULAIRE AJOUTÉS POUR LA COMPATIBILITÉ AVEC LE THÈME SOMBRE --- */
+/* --- STYLES FORMULAIRE (Ajout pour la lisibilité dans le thème sombre) --- */
 /* ========================================================================= */
 form div {
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    padding: 10px;
+    padding: 15px; /* Augmenté pour un look plus doux */
     border: 1px solid var(--color-border);
-    border-radius: 2px; /* Nouveaux coins moins arrondis */
-    background-color: var(--color-secondary-bg);
+    border-radius: 8px; /* Coins arrondis du thème doux */
+    background-color: var(--color-dark); /* Fond du champ plus sombre que la section */
 }
 
 /* Alignement en ligne sur écrans plus larges */
@@ -206,24 +276,24 @@ input[type="text"], input[type="tel"], textarea, select {
     flex-grow: 1;
     padding: 10px;
     border: 1px solid var(--color-border); 
-    border-radius: 2px;
-    /* CHANGEMENT CLÉ : utilise un fond contrasté avec la section */
-    background-color: var(--color-dark); 
+    border-radius: 4px;
+    background-color: var(--color-secondary-bg); /* Rend les champs plus clairs que le fond du div parent */
     color: var(--color-light);
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 input[type="text"]:focus, input[type="tel"]:focus, textarea:focus, select:focus {
-    border-color: var(--color-accent); /* Bleu République au focus */
-    box-shadow: 0 0 5px rgba(0, 0, 145, 0.8);
+    border-color: var(--color-accent); /* Bleu vif au focus */
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); /* Ombre douce au focus */
     outline: none;
+    background-color: #495567; /* Légèrement plus clair au focus pour le feedback */
 }
 
 /* Style des boutons submit/reset */
 input[type="submit"], input[type="reset"] {
     padding: 10px 20px;
     border: none;
-    border-radius: 2px; /* Institutionnel */
+    border-radius: 6px; 
     cursor: pointer;
     font-weight: 700;
     transition: background-color 0.3s;
@@ -236,7 +306,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #000078;
+    background-color: #2563eb;
 }
 
 input[type="reset"] {
@@ -245,7 +315,7 @@ input[type="reset"] {
 }
 
 input[type="reset"]:hover {
-    background-color: #94a3b8; /* Gris légèrement plus clair au survol */
+    background-color: #6b7280; 
 }
 
 /* Style des spans d'erreur */
@@ -253,83 +323,41 @@ span[id^="saisie"] {
     display: block;
     margin-top: 5px;
     font-size: 0.9em;
-    color: var(--color-highlight); 
+    color: #ff6347; /* Rouge/Orange pour les erreurs dans un thème doux */
     font-style: italic;
-}
-
-/* Ajustement de la marge en mode ligne pour les spans d'erreur */
-@media (min-width: 600px) {
-    span[id^="saisie"] {
-        /* Aligné sous le champ, après l'espace pris par le label (150px + 15px de marge) */
-        margin-left: 165px; 
-    }
+    font-weight: 400;
 }
 
 
 /* ========================================================================= */
-/* --- RESPONSIVE MOBILE (Barre de navigation en haut) --- */
+/* --- RESPONSIVE MOBILE (La navigation latérale doit disparaître) --- */
 /* ========================================================================= */
 @media (max-width: 768px) {
     body {
-        padding: 80px 10px 10px 10px;
+        /* Suppression du padding gauche forcé pour la nav latérale */
+        padding-left: 20px; 
     }
 
-    /* La nav devient une barre horizontale en haut */
+    /* Masquer la navigation latérale et la remplacer par un menu en haut */
     nav {
-        height: 60px;
+        /* Transforme la nav latérale en barre horizontale non fixe pour l'instant */
+        position: static;
         width: 100%;
-        border-right: none;
-        border-bottom: 2px solid var(--color-accent); /* Barre bleue sur mobile */
-    }
-    
-    /* La liste des éléments est affichée en ligne */
-    nav ul {
-        display: flex;
-        justify-content: space-around;
-        padding: 0;
-        height: 100%;
-        align-items: center;
-        overflow-x: auto;
-    }
-    
-    /* Les éléments de liste sont centrés */
-    nav li {
-        text-align: center;
-        flex-shrink: 0;
-    }
-    
-    /* Les liens de navigation sont adaptés */
-    nav li a {
-        padding: 10px 15px;
-        font-size: 0.9em;
-        border-bottom: none; 
-    }
-    
-    /* Au survol/actif en mobile */
-    nav li a:hover, nav li a:focus {
-        border-left: none;
-        border-bottom: 3px solid var(--color-accent);
-        padding-bottom: 7px;
-        padding-left: 15px;
+        height: auto;
+        box-shadow: none;
+        margin-bottom: 20px;
     }
 
-    /* Les sous-menus deviennent des menus déroulants sous l'élément parent */
-    nav li ul {
-        position: absolute; 
-        top: 60px;
-        left: 0;
-        width: 100%;
-        min-width: 100%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        border-radius: 0;
-    }
-
-    header {
-        border-bottom: 4px solid var(--color-accent);
-    }
-    
+    /* Adapter le header/section pour les petites résolutions */
     header h1 {
-        font-size: 1.5em;
-        margin: 0;
+        font-size: 1.8em;
+        text-align: left;
+        padding: 10px;
+    }
+
+    /* Corriger l'alignement des champs du formulaire en mobile */
+    form div:not(:last-child) {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
