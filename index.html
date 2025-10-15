@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 	
 	<head>
@@ -6,9 +7,8 @@
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Contact : Robot NOA</title>
-        <!-- LIAISON AVEC LA FEUILLE DE STYLE CORRIGÉE : styles.css -->
-        <link rel="stylesheet" href="css/styles.css">
-		<script language="javascript" src="formu.js"></script>
+        <!-- LIAISON AVEC LA FEUILLE DE STYLE CORRIGÉE : styles.css -->
+        <link rel="stylesheet" href="css/styles.css">
 	</head>
 
 	<body>	
@@ -50,35 +50,45 @@
 			</div>
 			<div>
 				<label for="nom">Nom :</label>
-				<input type="text" id="nom" size="30" value="" onblur="afficheOubli('nom','saisieNom')"/>
+                <!-- onblur="afficheOubli('nom','saisieNom')" supprimé -->
+				<input type="text" id="nom" size="30" value=""/>
 				<span id="saisieNom" ></span>
 			</div>
 			
 			<div>
 				<label for="prenom">Prénom : </label>
-				<input type="text" id="prenom" size="30" onblur='afficheOubli(this.id,"saisiePrenom")' />
+                <!-- onblur='afficheOubli(this.id,"saisiePrenom")' supprimé -->
+				<input type="text" id="prenom" size="30" />
 				<span id="saisiePrenom" ></span>
 			</div>
 
 			<div>
 				<label for="adresse">Adresse : </label>
 				<textarea id="adresse" rows="10" cols="10"></textarea>
+                <!-- Ajout du span d'erreur pour l'adresse -->
+                <span id="saisieAdresse" ></span>
 			</div>
 
 			<div>
 				<label for="ville">Ville : </label>
 				<input type="text" id="ville" size="30" /><br>
+                <!-- Ajout du span d'erreur pour la ville -->
+                <span id="saisieVille" ></span>
 			</div>
 
 			<div>
 				<label for="codePostal">Code Postal : </label>
 				<input type="text" id="codePostal" maxlength="5" /><br>
+                <!-- Ajout du span d'erreur pour le code postal -->
+                <span id="saisieCodePostal" ></span>
 			</div>
 
 
 			<div>
 				<input type="checkbox" name="news" id="news" valeur="oui" />
 				Oui, je veux recevoir des informations.<input type="text" id="adresseMail" size="60" />
+                <!-- Ajout du span d'erreur pour l'adresse mail (si newsletter cochée) -->
+                <span id="saisieAdresseMail" ></span>
 			</div>
 
 			<div>
@@ -90,8 +100,8 @@
 				<input type="radio" name="profession" value="enseignant" checked />Enseignant
 			</div>
 			<div>
-                <!-- CORRECTION CRITIQUE : Suppression de l'onclick. La soumission est gérée par la balise <form> -->
-				<input type="submit" value="Envoyer" /> 
+                <!-- onclick="verification()" supprimé -->
+				<input type="submit" value="Envoyer" /> 
 				<input type="reset" value="Réinitialiser" />
 			</div>
 			</form>
@@ -104,5 +114,6 @@
 		</footer>
 	
 		<!-- LIAISON DU SCRIPT JAVASCRIPT À LA FIN DU BODY POUR ÉVITER LES ERREURS -->
+		<script language="javascript" src="formu.js"></script>
 	</body>
 </html>
