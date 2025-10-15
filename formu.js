@@ -134,7 +134,7 @@ function verification(event) {
     console.log("-----------------------------------");
     // ***************************************************************
 
-    // --- LOGIQUE D'AFFICHAGE DU RÉCAPITULATIF OU DE L'ERREUR (window.open) ---
+    // --- LOGIQUE D'AFFICHAGE DU RÉCAPITULATIF OU DE L'ERREUR (window.open / alert) ---
     
     if (estValide) {
         // Construction du contenu HTML pour la fenêtre de récapitulatif
@@ -190,46 +190,12 @@ function verification(event) {
         nouvelleFenetre.document.close();
         
     } else {
-        // --- LOGIQUE D'AFFICHAGE DE L'ERREUR DANS UNE NOUVELLE FENÊTRE (Pop-up) ---
+        // --- LOGIQUE D'AFFICHAGE DE L'ERREUR AVEC alert() ---
         
-        // 1. Construction du contenu HTML pour la fenêtre d'erreur
-        var contenuErreur = `
-            <!DOCTYPE html>
-            <html lang="fr">
-            <head>
-                <title>Erreurs de Saisie</title>
-                <style>
-                    body { font-family: Arial, sans-serif; padding: 20px; background-color: #ffe6e6; }
-                    .erreur {
-                        padding: 15px; border: 1px solid red; border-radius: 8px;
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-color: white;
-                    }
-                    h2 { color: #cc0000; border-bottom: 2px solid #ffcccc; padding-bottom: 10px; }
-                    p { white-space: pre-wrap; margin: 10px 0; font-weight: bold; }
-                    button {
-                        margin-top: 15px; padding: 10px 15px; background-color: #cc0000; 
-                        color: white; border: none; border-radius: 5px; cursor: pointer;
-                        transition: background-color 0.2s;
-                    }
-                    button:hover { background-color: #990000; }
-                </style>
-            </head>
-            <body>
-                <div class="erreur">
-                    <h2>ATTENTION: Erreurs de Saisie</h2>
-                    <p>${messageErreur}</p>
-                    <button onclick="window.close()">Fermer cette notification</button>
-                </div>
-            </body>
-            </html>
-        `;
-
-        // 2. Affichage de l'erreur dans une petite fenêtre
-        var fenetreErreur = window.open("", "ErreursSaisie", "width=400,height=350,resizable=no,scrollbars=no");
-        fenetreErreur.document.write(contenuErreur);
-        fenetreErreur.document.close();
+        // 1. Déclencher l'alerte native avec la liste détaillée des erreurs
+        alert("ATTENTION: Veuillez corriger les erreurs suivantes :\n\n" + messageErreur);
         
-        // 3. Déclencher un focus sur le premier champ invalide pour guider l'utilisateur
+        // 2. Déclencher un focus sur le premier champ invalide pour guider l'utilisateur
         if (!validerChamp(nom, 'nom', 'saisieNom')) document.getElementById("nom").focus();
         else if (!validerChamp(prenom, 'prénom', 'saisiePrenom')) document.getElementById("prenom").focus();
         else if (!validerChamp(adresse, 'adresse', 'saisieAdresse')) document.getElementById("adresse").focus();
