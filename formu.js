@@ -1,30 +1,23 @@
-+128
--30
-Lines changed: 128 additions & 30 deletions
-Original file line number	Diff line number	Diff line change
-@@ -7,64 +7,162 @@
+// ******************************************************
+// TP2 - LE LANGAGE JAVASCRIPT (COTE CLIENT)
+// Fichier : formu.js
+// Auteur : Votre Nom
+// Date : 2025-10-15
+// ******************************************************
 
 /**
  * Fonction principale de vérification et de récapitulatif.
- * Récupère les données du formulaire et empêche la soumission par défaut.
  * Récupère les données du formulaire, vérifie leur intégrité, et affiche le récapitulatif.
  * @param {Event} event L'objet événement de la soumission du formulaire.
  */
 function verification(event) {
     // Empêche la soumission par défaut du formulaire, permettant au JS de gérer l'action.
-    // Ceci est crucial lorsque la fonction est appelée via l'attribut onsubmit du formulaire.
     if (event) {
         event.preventDefault();
     }
-
+    
     // 1. Récupération des valeurs des champs simples (getElementById)
     let civilite = document.getElementById("civilite").value;
-    let nom = document.getElementById("nom").value;
-    let prenom = document.getElementById("prenom").value;
-    let adresse = document.getElementById("adresse").value;
-    let ville = document.getElementById("ville").value;
-    let codePostal = document.getElementById("codePostal").value;
-    let adresseMail = document.getElementById("adresseMail").value;
     let nom = document.getElementById("nom").value.trim();
     let prenom = document.getElementById("prenom").value.trim();
     let adresse = document.getElementById("adresse").value.trim();
@@ -33,7 +26,6 @@ function verification(event) {
     let adresseMail = document.getElementById("adresseMail").value.trim();
 
     // 2. Récupération de la Catégorie Socio-Professionnelle (radio - getElementsByName)
-    // Consigne TP: getElementsByName renvoie un tableau de 5 valeurs gérées dans une boucle (for).
     let professionRadios = document.getElementsByName("profession");
     let professionChoisie = "Non spécifié";
 
@@ -41,16 +33,12 @@ function verification(event) {
     for (let i = 0; i < professionRadios.length; i++) {
         if (professionRadios[i].checked) {
             professionChoisie = professionRadios[i].value;
-            break; // Sortir de la boucle une fois l'élément trouvé
             break;
         }
     }
 
     // 3. Récupération de l'abonnement Newsletter (checkbox - getElementsByName)
-    // Consigne TP: "La vérification du cochage du checkbox (checked) se fera avec la méthode getElementsByName"
     let newsCheckboxes = document.getElementsByName("news");
-    
-    // getElementsByName renvoie un tableau. L'élément unique est à l'index [0].
     let newsCheckbox = newsCheckboxes[0]; 
     let abonnementNews = newsCheckbox.checked ? "Oui" : "Non";
     
@@ -58,6 +46,7 @@ function verification(event) {
     
     let estValide = true;
     let messageErreur = "Erreurs de saisie :\n";
+
     // Fonction d'aide pour la validation des champs de texte
     const validerChamp = (valeur, nomChamp, idSpan) => {
         const spanErreur = document.getElementById(idSpan);
@@ -81,6 +70,7 @@ function verification(event) {
     // On utilise la console pour les autres champs.
     estValide &= validerChamp(nom, 'nom', 'saisieNom');
     estValide &= validerChamp(prenom, 'prenom', 'saisiePrenom');
+
     if (adresse === "") {
         messageErreur += "- Veuillez saisir votre adresse.\n";
         estValide = false;
@@ -100,22 +90,8 @@ function verification(event) {
         estValide = false;
     }
 
-    // À PARTIR D'ICI, VOUS POUVEZ CONTINUER LA LOGIQUE DU TP :
-    // 1. Ajouter la validation des champs vides (POUR ALLER PLUS LOIN).
-    // 2. Utiliser window.open() pour créer la nouvelle fenêtre de récapitulatif.
     // --- LOGIQUE D'AFFICHAGE DU RÉCAPITULATIF (window.open) ---
-
-    console.log("--- Récapitulatif des données saisies ---");
-    console.log("Civilité: " + civilite);
-    console.log("Nom: " + nom);
-    console.log("Prénom: " + prenom);
-    console.log("Adresse: " + adresse.replace(/\n/g, ' '));
-    console.log("Ville: " + ville);
-    console.log("Code Postal: " + codePostal);
-    console.log("Catégorie Pro: " + professionChoisie);
-    console.log("Abonnement News: " + abonnementNews);
-    if (abonnementNews === "Oui") {
-        console.log("Adresse Mail: " + adresseMail);
+    
     if (estValide) {
         // Construction du contenu HTML pour la nouvelle fenêtre
         let contenuRecap = `
@@ -153,6 +129,7 @@ function verification(event) {
             </body>
             </html>
         `;
+
         // Utiliser la méthode open() de la classe window
         // Les dimensions demandées sont : hauteur 1500px et largeur 400px (je vais inverser pour un meilleur affichage)
         // La consigne visuelle montre une petite fenêtre, j'utilise donc 400x400 pour un meilleur rendu.
@@ -188,6 +165,4 @@ function verification(event) {
         if (!validerChamp(nom, 'nom', 'saisieNom')) document.getElementById("nom").focus();
         else if (!validerChamp(prenom, 'prenom', 'saisiePrenom')) document.getElementById("prenom").focus();
     }
-    console.log("--- Fin du récapitulatif ---");
 }
-// NOTE : La fonction afficheOubli() a été retirée, conformément à votre demande de minimalisme.
