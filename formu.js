@@ -115,7 +115,7 @@ function verification(event) {
     // --- EXPRESSIONS RÉGULIÈRES (REGEX) ---
     // Regex pour les noms/prénoms (lettres, espaces, tirets, accents)
     var regexAlpha = /^[a-zA-ZÀ-ÿ\s'-]+$/;
-    var msgAlpha = "Le champ doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).";
+    var msgAlpha = "Le champ "nom" doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).";
     
     // Regex pour le code postal (uniquement des chiffres)
     var regexNum = /^\d+$/;
