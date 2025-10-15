@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------
    REFONTE ESTHÉTIQUE : Thème Sombre Doux et Épuré
    Utilise la police 'Inter' (via un lien dans le HTML idéalement,
-   ou un fallback moderne comme system-ui) pour la lisibilité,
+   ou un un fallback moderne comme system-ui) pour la lisibilité,
    et des couleurs apaisantes.
 ---------------------------------------------------------------- */
 
@@ -22,6 +22,8 @@ body {
   color: var(--color-light);
   padding: 20px;
   margin: 0;
+  /* Ajout d'une marge en haut pour laisser de la place à la barre de navigation fixe */
+  padding-top: 70px; 
 }
 
 /* --- EN-TÊTE --- */
@@ -40,29 +42,99 @@ header h1 {
 
 /* --- NAVIGATION --- */
 nav {
+  /* Fixe la barre de navigation en haut de la page */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-secondary-bg);
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  
+  /* Ajustements du style */
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-  padding: 10px 0;
+  /* suppression de gap: 20px; */
+  margin-bottom: 0;
+  padding: 0; /* Réinitialisation du padding du nav pour mieux gérer les liens */
   border-bottom: 1px solid var(--color-border);
+}
+
+/* Stylisation de la liste principale dans la navigation */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Alignement horizontal des éléments principaux */
+}
+
+/* Les éléments de la liste principale */
+nav li {
+  position: relative; /* Point de référence pour le menu déroulant */
 }
 
 a {
   font-size: 1em;
-  font-variant: normal; /* Plus de petites majuscules sur les liens */
+  font-variant: normal; 
   background-color: transparent;
-  color: var(--color-accent); /* Utilisation de la couleur d'accent */
+  color: var(--color-light); /* Couleur par défaut blanche pour meilleure visibilité sur le fond sombre de la nav */
   text-decoration: none;
-  padding: 8px 12px;
-  transition: all 0.3s ease; /* Transition douce pour les effets */
-  border-radius: 4px;
+  padding: 15px 20px; /* Augmentation du padding pour une barre plus visible */
+  transition: all 0.3s ease; 
+  border-radius: 0; /* Pas de coins arrondis pour les liens de la barre fixe */
+  display: block;
 }
 
 a:hover, a:focus {
   background-color: var(--color-accent);
-  color: var(--color-dark); /* Texte sombre sur fond bleu au survol */
-  text-decoration: underline;
+  color: var(--color-dark); 
+  text-decoration: none; /* Supprime le soulignement au survol */
+}
+
+/* --- Dropdown Logic (Liste qui se déplie au survol) --- */
+nav li ul {
+  /* Le sous-menu par défaut est caché (répond à la demande de déploiement au survol) */
+  display: none;
+  
+  /* Positionnement pour le placer sous l'élément parent */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  
+  /* Style du conteneur du sous-menu */
+  background-color: var(--color-secondary-bg);
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  z-index: 2000;
+  padding: 5px 0;
+  
+  /* S'assurer que les éléments de la liste déroulante sont en colonne */
+  display: block;
+}
+
+/* Règle de survol pour afficher le sous-menu */
+nav li:hover > ul {
+  display: block; /* Le sous-menu apparaît au survol de son parent li */
+}
+
+nav li ul li {
+  /* Réinitialisation de la position pour les éléments de la sous-liste */
+  position: static;
+}
+
+nav li ul li a {
+  /* Les liens du sous-menu sont alignés à gauche et ont moins de padding */
+  padding: 10px 15px;
+  text-align: left;
+  color: var(--color-light);
+  width: 100%;
+  white-space: nowrap; /* Empêche le texte de se briser */
+}
+
+nav li ul li a:hover {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
 }
 
 /* --- SECTIONS ET CONTENU --- */
