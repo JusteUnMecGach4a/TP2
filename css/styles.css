@@ -1,80 +1,162 @@
+/* ----------------------------------------------------------------
+   REFONTE ESTHÉTIQUE : Thème Sombre Doux et Épuré
+   Utilise la police 'Inter' (via un lien dans le HTML idéalement,
+   ou un fallback moderne comme system-ui) pour la lisibilité,
+   et des couleurs apaisantes.
+---------------------------------------------------------------- */
 
-body{
-  font-family: 'Times New Roman', "Calibri", serif;
-  font-size: 20px;
-  background-color: yellow;
+:root {
+  /* Définition des variables de couleurs pour une gestion facile */
+  --color-dark: #1f2937;          /* Gris foncé (fond principal) */
+  --color-light: #f9fafb;         /* Presque blanc (texte principal) */
+  --color-accent: #3b82f6;        /* Bleu vif (éléments clés, liens) */
+  --color-secondary-bg: #374151;  /* Gris moyen (sections, cartes) */
+  --color-border: #4b5563;        /* Gris des bordures subtil */
 }
 
-header h1{
-  font-family: "Calibri", sans-serif;
-  font-size: 1.5em;
-  background-color: blue;
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 16px; /* Taille standard pour un meilleur confort de lecture */
+  line-height: 1.6;
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  padding: 20px;
+  margin: 0;
+}
+
+/* --- EN-TÊTE --- */
+header h1 {
+  font-family: inherit; /* Utilise la police du body */
+  font-size: 2.5em;
+  background-color: var(--color-secondary-bg);
+  color: var(--color-light);
   text-align: center;
-  border: 3px solid rgb(255,0,0);
+  border: 1px solid var(--color-border);
+  border-radius: 8px; /* Coins arrondis pour la modernité */
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre légère */
 }
 
-img  {
-  width: 20%;
+/* --- NAVIGATION --- */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
 }
 
-ul{
-  list-style-type: none;
-}
-li > ul{
-  list-style-type: square;
-}
-nav{
-  
-}
-
-a{
-  font-size: 1.2em;
-  background-color: black;
-  color: white;
-  font-variant: small-caps;
+a {
+  font-size: 1em;
+  font-variant: normal; /* Plus de petites majuscules sur les liens */
+  background-color: transparent;
+  color: var(--color-accent); /* Utilisation de la couleur d'accent */
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: all 0.3s ease; /* Transition douce pour les effets */
+  border-radius: 4px;
 }
 
-section{
-  background-color: lightgoldenrodyellow;
-  border: black;
-  border-width: 3px;
+a:hover, a:focus {
+  background-color: var(--color-accent);
+  color: var(--color-dark); /* Texte sombre sur fond bleu au survol */
+  text-decoration: underline;
+}
+
+/* --- SECTIONS ET CONTENU --- */
+section {
+  background-color: var(--color-secondary-bg);
+  border: none;
+  border-radius: 8px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 h2, h3 {
-  color: red;
-  text-align: center;
+  color: var(--color-accent); /* Titres en couleur accent */
+  text-align: left;
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 5px;
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 
-p{
-  margin-left: 3%;
+p {
+  margin-left: 0;
   text-align: justify;
-  padding-right: 10px;
+  padding-right: 0;
+  margin-bottom: 1em;
 }
 
-ol{
-  font-size: .9em;
-  list-style-type: upper-roman;
-  list-style-position: inside;
+/* --- LISTES --- */
+ul, ol {
+  padding-left: 20px;
+  font-size: 1em; /* Réinitialisation de la taille pour la cohérence */
 }
 
-footer p {
-  border: black;
-  border-width: 3px;
-  text-align: right;
-  font-size: -25%;
-  font-style: italic;
+ul {
+  list-style-type: disc; /* Revenir à la liste à puces par défaut pour la lisibilité */
 }
 
+li > ul {
+  list-style-type: circle; /* Carrés remplacés par des cercles vides */
+}
 
+ol {
+  list-style-type: decimal; /* Chiffres arabes par défaut, les romains sont moins courants */
+  list-style-position: outside;
+}
+
+/* --- IMAGES --- */
+img {
+  width: 100%; /* Occupation de la pleine largeur de son conteneur */
+  max-width: 300px; /* Limiter la taille maximale pour ne pas être écrasant */
+  height: auto;
+  display: block;
+  margin: 20px auto; /* Centrer l'image */
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* --- TABLEAU --- */
 table {
-  border: 3px dashed rgb(54, 4, 56);
+  width: 100%;
+  border: 1px solid var(--color-border);
   border-collapse: collapse;
+  font-weight: normal;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden; /* Assure que les coins arrondis sont appliqués */
+}
+
+th, td {
+  border: 1px solid var(--color-border); /* Bordures simples et claires */
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: var(--color-accent);
+  color: var(--color-dark);
   font-weight: bold;
 }
-th, td {
-  border: 6px inset white;
+
+tr:nth-child(even) { /* '2n' est équivalent à 'even' */
+  color: var(--color-light);
+  background: var(--color-dark); /* Contraste clair sur fond très sombre */
 }
-tr:nth-child(2n) {
-  color: white;
-  background: black;
+
+/* --- PIED DE PAGE --- */
+footer p {
+  border: none;
+  border-top: 1px solid var(--color-border); /* Séparateur subtil */
+  padding-top: 10px;
+  margin-top: 40px;
+  text-align: right;
+  font-size: 0.9em; /* Taille plus petite, lisible (l'ancienne était invalide) */
+  font-style: italic;
+  color: var(--color-border); /* Texte estompé */
 }
