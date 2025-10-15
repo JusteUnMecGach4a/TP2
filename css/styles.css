@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------
-    FEUILLE DE STYLE INITIALE (THÈME SOMBRE)
-    Ceci est la feuille de style réinitialisée avec un thème sombre de base.
+    FEUILLE DE STYLE FINALE (THÈME SOMBRE COHÉRENT)
+    Inclut la navigation moderne, le formulaire lisible, et l'en-tête/pied de page stylisés.
 ---------------------------------------------------------------- */
 
 /* Variables pour le thème sombre (facilite les changements) */
@@ -34,11 +34,13 @@ header {
 }
 
 header img {
-    /* Style pour l'image du logo (Assurez-vous d'avoir une image dans le HTML) */
+    /* Style pour le logo circulaire */
     width: 60px;
-    height: auto;
+    height: 60px; /* Assure une taille fixe pour un cercle parfait */
     margin-right: 15px;
-    border-radius: 4px;
+    border-radius: 50%; /* Crée la forme circulaire */
+    object-fit: cover; /* Assure que l'image couvre l'espace sans déformation */
+    border: 3px solid var(--color-accent); /* Ajout d'une bordure accentuée */
 }
 
 header h1 {
