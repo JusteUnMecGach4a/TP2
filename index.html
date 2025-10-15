@@ -6,9 +6,12 @@
 		<link rel="icon" type="image/png" href="nao.png">
 		<meta charset="UTF-8">
 		<title>Contact : Robot NOA</title>
+        <!-- LIAISON AVEC LA FEUILLE DE STYLE -->
+        <link rel="stylesheet" href="css/style.css">
+        <!-- Fin de la liaison -->
 	</head>
 
-	<body> 
+	<body>	
 
 		<header>
 				<img src="logo.PNG" alt="Ceci est le logo du lycée">
@@ -33,15 +36,16 @@
 		</nav>
 		
 		<section>
+			<!-- Attention: l'attribut onsubmit du formulaire a été retiré -->
 			<form id="contact" enctype="text/plain">
 			<h2>Formulaire de Contact</h2>
 			
 			<div>
 			<label for="civilite">Civilité : </label>
 				<select id="civilite">
-				  <option >Monsieur</option>
-				  <option >Madame</option>
-				  <option >Mademoiselle</option>
+				  <option >Monsieur</option>
+				  <option >Madame</option>
+				  <option >Mademoiselle</option>
 				</select>
 			</div>
 			<div>
@@ -63,12 +67,12 @@
 
 			<div>
 				<label for="ville">Ville : </label>
-				<input type="text" id="ville" size="30" /><br/>
+				<input type="text" id="ville" size="30" /><br>
 			</div>
 
 			<div>
 				<label for="codePostal">Code Postal : </label>
-				<input type="text" id="codePostal" maxlength="5" /><br/>
+				<input type="text" id="codePostal" maxlength="5" /><br>
 			</div>
 
 
