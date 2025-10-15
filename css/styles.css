@@ -115,11 +115,21 @@ nav li ul a {
     font-weight: normal;
 }
 
-/* --- Base Formulaire et Sections --- */
+/* --- Style FORM (Conteneur principal du formulaire) --- */
+form {
+    /* Ajout d'une bordure et d'un fond pour englober le formulaire */
+    background-color: var(--color-surface); 
+    padding: 30px;
+    border-radius: 12px;
+    border: 2px solid var(--color-border); /* Bordure visible et douce */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Base Formulaire et Champs (Div internes) --- */
 form div {
     margin-bottom: 15px;
     padding: 15px; /* Augmentation du padding pour aérer */
-    background-color: var(--color-surface); /* Pour faire ressortir les champs */
+    background-color: var(--color-background); /* Fond plus sombre que le formulaire (contraste) */
     border-radius: 8px; /* Coins plus arrondis */
     border: 1px solid var(--color-border);
 }
