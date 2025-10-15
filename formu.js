@@ -7,9 +7,10 @@
 
 // --- EXPRESSIONS RÉGULIÈRES (GLOBALES POUR LES DEUX FONCTIONS) ---
 var regExpAlpha = /^[a-zA-ZÀ-ÿ\s'-]+$/;
-var errorMessageAlpha = "Votre nom doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).";
+var errorMessageNom = "Votre nom doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents)."; // Renommé et précisé
+var errorMessagePrenom = "Votre prénom doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents)."; // Nouveau message précis
 var regExpNum = /^\d+$/;
-var errorMessageNum = "Doit contenir uniquement des chiffres.";
+var errorMessageNum = "Le code postal doit contenir uniquement des chiffres.";
 var regExpTel = /^\d{10}$/; 
 var errorMessageTel = "Le numéro de téléphone doit contenir exactement 10 chiffres (ex: 0123456789).";
 var regExpEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,10 +27,9 @@ var afficheOubli = (champID, spanID) => {
     var inputElement = document.getElementById(champID);
     var spanErreur = document.getElementById(spanID);
     
-    // Pour les éléments qui pourraient ne pas avoir de .value (comme un select ou checkbox non géré ici)
     if (!inputElement) return;
 
-    var valeurChamp = inputElement.value.trim(); // Renommé 'valeur' en 'valeurChamp'
+    var valeurChamp = inputElement.value.trim();
     var specificError = "";
     
     // Détermination des règles à appliquer
@@ -41,12 +41,11 @@ var afficheOubli = (champID, spanID) => {
     if (champID === 'nom') {
         nomChamp = 'nom';
         regexPattern = regExpAlpha;
-        regexErrorMessage = errorMessageAlpha;
+        regexErrorMessage = errorMessageNom; // Utilise le message précis pour Nom
     } else if (champID === 'prenom') {
         nomChamp = 'prénom';
         regexPattern = regExpAlpha;
-        // La logique d'adaptation du message est gérée plus bas
-        regexErrorMessage = errorMessageAlpha; 
+        regexErrorMessage = errorMessagePrenom; // Utilise le message précis pour Prénom
     } else if (champID === 'telephone') {
         nomChamp = 'numéro de téléphone';
         regexPattern = regExpTel;
@@ -67,9 +66,9 @@ var afficheOubli = (champID, spanID) => {
             spanErreur.textContent = "";
             return;
         }
-    } else if (champID === 'adresse') { // Ajout de l'adresse
+    } else if (champID === 'adresse') { 
         nomChamp = 'adresse';
-    } else if (champID === 'ville') { // Ajout de la ville
+    } else if (champID === 'ville') { 
         nomChamp = 'ville';
     }
     
@@ -79,12 +78,8 @@ var afficheOubli = (champID, spanID) => {
     } 
     // Validation Regex: si non vide mais le format est mauvais
     else if (regexPattern && !regexPattern.test(valeurChamp)) {
-        // Logique pour adapter le message si on est sur le prénom
-        if (champID === 'prenom') {
-             specificError = `Votre prénom doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).`;
-        } else {
-             specificError = regexErrorMessage;
-        }
+        // Utilise directement le message d'erreur défini ci-dessus (Nom, Prénom, Tél, Code Postal, Email)
+        specificError = regexErrorMessage;
     }
 
     // Affichage dans le span
@@ -103,9 +98,9 @@ var afficheOubli = (champID, spanID) => {
  * Configure les écouteurs d'événements onblur et input (temps réel) pour les champs requis.
  * Cela permet la validation en temps réel sans avoir à modifier le HTML.
  */
-var setupOnBlurListeners = () => { // Renommé la variable de la fonction pour camelCase
+var setupOnBlurListeners = () => { 
     // Liste des champs à surveiller et leur ID de span d'erreur
-    var fieldsToValidate = [ // Renommé 'fields' en 'fieldsToValidate'
+    var fieldsToValidate = [ 
         { id: 'nom', spanId: 'saisieNom' },
         { id: 'prenom', spanId: 'saisiePrenom' },
         { id: 'telephone', spanId: 'saisieTelephone' },
@@ -158,7 +153,6 @@ function verification(event) {
     var professionRadios = document.getElementsByName("profession");
     var professionChoisie = "Non spécifié";
 
-    // Parcourir le tableau des éléments radio pour trouver celui qui est 'checked'
     for (var i = 0; i < professionRadios.length; i++) {
         if (professionRadios[i].checked) {
             professionChoisie = professionRadios[i].value;
@@ -168,7 +162,7 @@ function verification(event) {
 
     // 3. Récupération de l'abonnement Newsletter (checkbox - getElementsByName)
     var newsCheckboxes = document.getElementsByName("news");
-    var newsCheckboxElement = newsCheckboxes.length > 0 ? newsCheckboxes[0] : { checked: false }; // Renommé 'newsCheckbox' en 'newsCheckboxElement'
+    var newsCheckboxElement = newsCheckboxes.length > 0 ? newsCheckboxes[0] : { checked: false }; 
     var abonnementNews = newsCheckboxElement.checked ? "Oui" : "Non";
     
     // ***************************************************************
@@ -183,36 +177,34 @@ function verification(event) {
     
     // --- PARTIE STRUCTURES DE TESTS (if) ET VALIDATION ---
     
-    var isFormValid = true; // Renommé 'estValide' en 'isFormValid'
-    var validationErrorMessage = ""; // Renommé 'messageErreur' en 'validationErrorMessage'
+    var isFormValid = true; 
+    var validationErrorMessage = ""; 
     var formContainer = document.getElementById('contact');
 
     /**
      * Fonction d'aide pour la validation des champs de texte et l'affichage d'erreur local (dans le span).
      * NOTE: Cette fonction est principalement utilisée à la soumission pour accumuler les messages d'erreur.
      */
-    var validerChamp = (champValue, champName, errorSpanId, regexPattern = null, regexErrorMessage = null) => { // Renommé les paramètres
+    var validerChamp = (champValue, champName, errorSpanId, regexPattern = null, regexErrorMessage = null) => { 
         var spanErreur = document.getElementById(errorSpanId);
-        var isValid = true; // Renommé 'valid' en 'isValid'
+        var isValid = true; 
         var specificError = "";
+        
+        // Capitaliser le nom du champ pour l'affichage dans l'alerte globale
+        const champNameCapitalized = champName.charAt(0).toUpperCase() + champName.slice(1); 
 
         if (champValue === "") {
             specificError = `Veuillez saisir votre ${champName}.`;
-            validationErrorMessage += `- Veuillez saisir votre ${champName}.\n`;
+            validationErrorMessage += `- ${champNameCapitalized} : Veuillez saisir la valeur.\n`; // Message plus précis
             isValid = false;
         } else if (regexPattern && !regexPattern.test(champValue)) {
-            // Logique pour adapter le message à la soumission
-            if (champName === 'prénom') {
-                specificError = `Votre prénom doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).`;
-                validationErrorMessage += `- Votre prénom doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).\n`;
-            } else {
-                specificError = regexErrorMessage;
-                validationErrorMessage += `- ${regexErrorMessage}\n`;
-            }
+            // Utilise le message d'erreur précis (errorMessageNom, errorMessagePrenom, etc.)
+            specificError = regexErrorMessage;
+            validationErrorMessage += `- ${champNameCapitalized} : ${regexErrorMessage}\n`; // Message plus précis
             isValid = false;
         }
         
-        // Affichage dans le span si l'ID existe (s'assure que le message de soumission n'écrase pas le message onblur)
+        // Affichage dans le span
         if (spanErreur && !isValid) {
             spanErreur.textContent = specificError;
             spanErreur.style.color = 'red';
@@ -233,9 +225,9 @@ function verification(event) {
         errorDiv.remove();
     }
 
-    // 1. Validation de TOUS les champs obligatoires (les fonctions d'aide mettent à jour isFormValid et validationErrorMessage)
-    validerChamp(nom, 'nom', 'saisieNom', regExpAlpha, errorMessageAlpha);
-    validerChamp(prenom, 'prénom', 'saisiePrenom', regExpAlpha, errorMessageAlpha);
+    // 1. Validation de TOUS les champs obligatoires
+    validerChamp(nom, 'nom', 'saisieNom', regExpAlpha, errorMessageNom);
+    validerChamp(prenom, 'prénom', 'saisiePrenom', regExpAlpha, errorMessagePrenom); // Utilise le message précis
     validerChamp(telephone, 'téléphone', 'saisieTelephone', regExpTel, errorMessageTel); 
 
     validerChamp(adresse, 'adresse', 'saisieAdresse');
@@ -330,7 +322,6 @@ function verification(event) {
         alert("ATTENTION: Veuillez corriger les erreurs suivantes :\n\n" + validationErrorMessage);
         
         // 2. Déclencher un focus sur le premier champ invalide pour guider l'utilisateur
-        // Mise à jour de la séquence de focus pour inclure le téléphone
         if (document.getElementById("nom").value.trim() === "" || !regExpAlpha.test(document.getElementById("nom").value.trim())) {
             document.getElementById("nom").focus();
         } else if (document.getElementById("prenom").value.trim() === "" || !regExpAlpha.test(document.getElementById("prenom").value.trim())) {
