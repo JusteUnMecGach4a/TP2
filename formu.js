@@ -88,7 +88,7 @@ var afficheOubli = (champID, spanID) => {
 };
 
 /**
- * Configure les écouteurs d'événements onblur pour les champs requis.
+ * Configure les écouteurs d'événements onblur et input (temps réel) pour les champs requis.
  * Cela permet la validation en temps réel sans avoir à modifier le HTML.
  */
 var setupOnBlurListeners = () => {
@@ -105,8 +105,11 @@ var setupOnBlurListeners = () => {
     fields.forEach(field => {
         var element = document.getElementById(field.id);
         if (element) {
-            // Ajoute l'écouteur onblur qui appelle afficheOubli
+            // 1. Ajoute l'écouteur 'blur' (quitter le champ) - Validation finale lors de la sortie
             element.addEventListener('blur', () => afficheOubli(field.id, field.spanId));
+            
+            // 2. Ajoute l'écouteur 'input' (taper dans le champ) - Validation en temps réel (détecte les erreurs milliseconde par milliseconde)
+            element.addEventListener('input', () => afficheOubli(field.id, field.spanId));
         }
     });
     
