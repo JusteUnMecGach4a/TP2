@@ -32,9 +32,12 @@ function verification() {
         }
     }
 
-    // 3. Récupération de l'abonnement Newsletter (checkbox - getElementsByName ou getElementById)
-    // Ici, nous utilisons l'ID pour plus de simplicité, car l'ID est unique.
-    let newsCheckbox = document.getElementById("news");
+    // 3. Récupération de l'abonnement Newsletter (checkbox - getElementsByName)
+    // Consigne TP: "La vérification du cochage du checkbox (checked) se fera avec la méthode getElementsByName"
+    let newsCheckboxes = document.getElementsByName("news");
+    
+    // getElementsByName renvoie un tableau. L'élément unique est à l'index [0].
+    let newsCheckbox = newsCheckboxes[0]; 
     let abonnementNews = newsCheckbox.checked ? "Oui" : "Non";
 
 
