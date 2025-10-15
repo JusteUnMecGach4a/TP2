@@ -6,6 +6,18 @@
 // ******************************************************
 
 /**
+* Fonction vide ajoutée pour résoudre l'erreur ReferenceError: afficheOubli is not defined
+* causée par la présence de onblur="..." dans le fichier HTML.
+* @param {string} champID L'ID du champ à vérifier.
+* @param {string} spanID L'ID du span d'erreur.
+*/
+var afficheOubli = (champID, spanID) => {
+    // Cette fonction est intentionnellement vide pour éviter le crash.
+    // La validation est gérée par la fonction verification() au moment de la soumission.
+};
+
+
+/**
 * Fonction principale de vérification et de récapitulatif.
 * Récupère les données du formulaire, vérifie leur intégrité, et affiche le récapitulatif.
 * @param {Event} event L'objet événement de la soumission du formulaire.
