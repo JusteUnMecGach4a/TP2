@@ -5,10 +5,10 @@
 	<head>
 		<link rel="icon" type="image/png" href="images/nao.png">
 		<meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Contact : Robot NOA</title>
-        <!-- LIAISON AVEC LA FEUILLE DE STYLE CORRIGÉE : styles.css -->
-        <link rel="stylesheet" href="css/styles.css">
+        <!-- LIAISON AVEC LA FEUILLE DE STYLE CORRIGÉE : styles.css -->
+        <link rel="stylesheet" href="css/styles.css">
 	</head>
 
 	<body>	
@@ -36,7 +36,7 @@
 		</nav>
 		
 		<section>
-            <!-- CORRECTION CRITIQUE : Interception de l'événement de soumission sur la balise <form> -->
+            <!-- CORRECTION CRITIQUE : Interception de l'événement de soumission sur la balise <form> -->
 			<form id="contact" onsubmit="verification(event)" enctype="text/plain">
 			<h2>Formulaire de Contact</h2>
 			
@@ -50,45 +50,53 @@
 			</div>
 			<div>
 				<label for="nom">Nom :</label>
-                <!-- onblur="afficheOubli('nom','saisieNom')" supprimé -->
+                <!-- onblur="afficheOubli('nom','saisieNom')" supprimé -->
 				<input type="text" id="nom" size="30" value=""/>
 				<span id="saisieNom" ></span>
 			</div>
 			
 			<div>
 				<label for="prenom">Prénom : </label>
-                <!-- onblur='afficheOubli(this.id,"saisiePrenom")' supprimé -->
+                <!-- onblur='afficheOubli(this.id,"saisiePrenom")' supprimé -->
 				<input type="text" id="prenom" size="30" />
 				<span id="saisiePrenom" ></span>
 			</div>
+            
+            <!-- NOUVEL AJOUT : Champ Numéro de Téléphone -->
+			<div>
+				<label for="telephone">Téléphone : </label>
+				<input type="tel" id="telephone" size="30" />
+				<span id="saisieTelephone" ></span>
+			</div>
+            <!-- FIN NOUVEL AJOUT -->
 
 			<div>
 				<label for="adresse">Adresse : </label>
 				<textarea id="adresse" rows="10" cols="10"></textarea>
-                <!-- Ajout du span d'erreur pour l'adresse -->
-                <span id="saisieAdresse" ></span>
+                <!-- Ajout du span d'erreur pour l'adresse -->
+                <span id="saisieAdresse" ></span>
 			</div>
 
 			<div>
 				<label for="ville">Ville : </label>
 				<input type="text" id="ville" size="30" /><br>
-                <!-- Ajout du span d'erreur pour la ville -->
-                <span id="saisieVille" ></span>
+                <!-- Ajout du span d'erreur pour la ville -->
+                <span id="saisieVille" ></span>
 			</div>
 
 			<div>
 				<label for="codePostal">Code Postal : </label>
 				<input type="text" id="codePostal" maxlength="5" /><br>
-                <!-- Ajout du span d'erreur pour le code postal -->
-                <span id="saisieCodePostal" ></span>
+                <!-- Ajout du span d'erreur pour le code postal -->
+                <span id="saisieCodePostal" ></span>
 			</div>
 
 
 			<div>
 				<input type="checkbox" name="news" id="news" valeur="oui" />
 				Oui, je veux recevoir des informations.<input type="text" id="adresseMail" size="60" />
-                <!-- Ajout du span d'erreur pour l'adresse mail (si newsletter cochée) -->
-                <span id="saisieAdresseMail" ></span>
+                <!-- Ajout du span d'erreur pour l'adresse mail (si newsletter cochée) -->
+                <span id="saisieAdresseMail" ></span>
 			</div>
 
 			<div>
@@ -100,7 +108,7 @@
 				<input type="radio" name="profession" value="enseignant" checked />Enseignant
 			</div>
 			<div>
-                <!-- onclick="verification()" supprimé -->
+                <!-- onclick="verification()" supprimé -->
 				<input type="submit" value="Envoyer" /> 
 				<input type="reset" value="Réinitialiser" />
 			</div>
