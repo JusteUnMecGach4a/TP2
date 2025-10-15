@@ -195,20 +195,19 @@ function verification(event) {
         // Si la validation échoue, afficher le message d'erreur dans le DOM
         console.error(messageErreur);
         
-        // Créer un div de message d'erreur temporaire
-        // Étant donné que nous avons retiré l'élément en début de fonction, nous le recréons.
-        var newErrorDiv = document.createElement('div');
-        newErrorDiv.id = 'global-error-message';
-        newErrorDiv.className = 'text-red-600 font-bold mb-4 p-3 bg-red-50 border border-red-200 rounded-lg';
+        // Créer un div de message d'erreur temporaire (remplace le pop-up pour une meilleure UX)
+        var messageAlerteDOM = document.createElement('div');
+        messageAlerteDOM.id = 'global-error-message';
+        messageAlerteDOM.className = 'text-red-600 font-bold mb-4 p-3 bg-red-50 border border-red-200 rounded-lg';
         
         // Trouver l'endroit pour insérer: après le h2 du formulaire
-        var h2 = formContainer.querySelector('h2');
-        if (h2) {
-            formContainer.insertBefore(newErrorDiv, h2.nextSibling);
+        var elementH2 = formContainer.querySelector('h2');
+        if (elementH2) {
+            formContainer.insertBefore(messageAlerteDOM, elementH2.nextSibling);
         } else {
-            formContainer.insertBefore(newErrorDiv, formContainer.firstChild); 
+            formContainer.insertBefore(messageAlerteDOM, formContainer.firstChild); 
         }
-        newErrorDiv.textContent = "ATTENTION: Veuillez corriger les erreurs de saisie ci-dessous.";
+        messageAlerteDOM.textContent = "ATTENTION: Veuillez corriger les erreurs de saisie ci-dessous.";
         
         // Déclencher un focus sur le premier champ invalide
         if (!validerChamp(nom, 'nom', 'saisieNom')) document.getElementById("nom").focus();
