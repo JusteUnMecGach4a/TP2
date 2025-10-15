@@ -11,7 +11,7 @@
 * @param {Event} event L'objet événement de la soumission du formulaire.
 */
 function verification(event) {
-    // Empêche la soumission par défaut du formulaire, permettant au JS de gérer l'action.
+    // Empêche la soumission par défaut du formulaire (rechargement de la page).
     if (event) {
         event.preventDefault();
     }
@@ -21,7 +21,7 @@ function verification(event) {
     var nom = document.getElementById("nom").value.trim();
     var prenom = document.getElementById("prenom").value.trim();
     var adresse = document.getElementById("adresse").value.trim();
-    var ville = document.getElementById("ville").value.trim();
+    var ville = document.getElementById("ville").trim();
     var codePostal = document.getElementById("codePostal").value.trim();
     var adresseMail = document.getElementById("adresseMail").value.trim();
 
@@ -39,24 +39,17 @@ function verification(event) {
 
     // 3. Récupération de l'abonnement Newsletter (checkbox - getElementsByName)
     var newsCheckboxes = document.getElementsByName("news");
-    // S'assurer que la checkbox existe
     var newsCheckbox = newsCheckboxes.length > 0 ? newsCheckboxes[0] : { checked: false }; 
     var abonnementNews = newsCheckbox.checked ? "Oui" : "Non";
     
     // ***************************************************************
     // INSTRUCTIONS CONSOLE.LOG POUR DÉBOGAGE
-    // Affiche le contenu des variables récupérées.
     // ***************************************************************
     console.log("--- Récupération des données du formulaire ---");
     console.log("Nom complet : " + nom + " " + prenom);
     console.log("Adresse : " + adresse + ", " + ville + " " + codePostal);
-    console.log("Profession : " + professionChoisie);
     console.log("Abonnement Newsletter : " + abonnementNews);
-    if (abonnementNews === "Oui") {
-        console.log("Email : " + adresseMail);
-    }
     console.log("----------------------------------------------");
-    // ***************************************************************
     
     // --- PARTIE STRUCTURES DE TESTS (if) ET VALIDATION ---
     
@@ -64,12 +57,11 @@ function verification(event) {
     var messageErreur = "Erreurs de saisie :\n";
 
     /**
-     * Fonction d'aide pour la validation des champs de texte et l'affichage d'erreur local.
-     * Note: La fonction est définie avec 'var' (variable globale de fonction) pour rester cohérente.
+     * Fonction d'aide pour la validation des champs de texte et l'affichage d'erreur local (dans le span).
      */
     var validerChamp = (valeur, nomChamp, idSpan) => {
-        var spanErreur = document.getElementById(idSpan); // Remplacé 'const' par 'var'
-        var valid = true; // Remplacé 'let' par 'var'
+        var spanErreur = document.getElementById(idSpan);
+        var valid = true;
 
         if (valeur === "") {
             messageErreur += `- Veuillez saisir votre ${nomChamp}.\n`;
@@ -81,6 +73,7 @@ function verification(event) {
             if (!valid) {
                 spanErreur.textContent = `Veuillez saisir votre ${nomChamp}.`;
                 spanErreur.style.color = 'red';
+                spanErreur.style.fontSize = '0.9em';
             } else {
                 spanErreur.textContent = "";
             }
@@ -89,41 +82,36 @@ function verification(event) {
     };
     
     // Cache le message d'erreur global avant de recommencer la validation
-    var formContainer = document.getElementById('contact'); // Remplacé 'const' par 'var'
-    
-    // Suppression de l'ancienne boîte d'erreur si elle existe
-    var errorDiv = document.getElementById('global-error-message'); // Remplacé 'const' par 'var'
+    var formContainer = document.getElementById('contact');
+    var errorDiv = document.getElementById('global-error-message');
     if (errorDiv) {
         errorDiv.remove();
     }
 
-    // 1. Validation des champs obligatoires (Nom, Prénom, Adresse, Ville, Code Postal)
+    // 1. Validation de TOUS les champs obligatoires (Nom, Prénom, Adresse, Ville, Code Postal)
+    // L'appel à validerChamp met à jour estValide et affiche le message local si le champ est vide.
     estValide = validerChamp(nom, 'nom', 'saisieNom') && estValide;
     estValide = validerChamp(prenom, 'prénom', 'saisiePrenom') && estValide;
-
-    // Pour les autres champs obligatoires
-    if (adresse === "") {
-        messageErreur += "- Veuillez saisir votre adresse.\n";
-        estValide = false;
-    }
-    if (ville === "") {
-        messageErreur += "- Veuillez saisir votre ville.\n";
-        estValide = false;
-    }
-    if (codePostal === "") {
-        messageErreur += "- Veuillez saisir votre code postal.\n";
-        estValide = false;
-    }
+    estValide = validerChamp(adresse, 'adresse', 'saisieAdresse') && estValide;
+    estValide = validerChamp(ville, 'ville', 'saisieVille') && estValide;
+    estValide = validerChamp(codePostal, 'code postal', 'saisieCodePostal') && estValide;
+    
 
     // 2. Validation du champ Mail si la checkbox est cochée
-    if (abonnementNews === "Oui" && adresseMail === "") {
-        messageErreur += "- Veuillez saisir votre adresse mail pour l'abonnement à la newsletter.\n";
-        estValide = false;
+    if (abonnementNews === "Oui") {
+        // Réutilise la fonction validerChamp qui gère l'affichage du span 'saisieAdresseMail'
+        estValide = validerChamp(adresseMail, 'adresse mail', 'saisieAdresseMail') && estValide;
+    } else {
+        // Si la newsletter n'est PAS cochée, on s'assure que le message d'erreur local est effacé
+        var spanErreurMail = document.getElementById('saisieAdresseMail');
+        if (spanErreurMail) {
+            spanErreurMail.textContent = "";
+        }
     }
+
 
     // ***************************************************************
     // INSTRUCTIONS CONSOLE.LOG POUR DÉBOGAGE
-    // Affiche l'état de la validation après les tests.
     // ***************************************************************
     console.log("--- Résultat de la validation ---");
     console.log("Est valide : " + estValide);
@@ -198,7 +186,13 @@ function verification(event) {
         // Créer un div de message d'erreur temporaire (remplace le pop-up pour une meilleure UX)
         var messageAlerteDOM = document.createElement('div');
         messageAlerteDOM.id = 'global-error-message';
-        messageAlerteDOM.className = 'text-red-600 font-bold mb-4 p-3 bg-red-50 border border-red-200 rounded-lg';
+        messageAlerteDOM.style.color = 'red';
+        messageAlerteDOM.style.fontWeight = 'bold';
+        messageAlerteDOM.style.border = '1px solid red';
+        messageAlerteDOM.style.padding = '10px';
+        messageAlerteDOM.style.marginBottom = '15px';
+
+
         
         // Trouver l'endroit pour insérer: après le h2 du formulaire
         var elementH2 = formContainer.querySelector('h2');
@@ -209,12 +203,13 @@ function verification(event) {
         }
         messageAlerteDOM.textContent = "ATTENTION: Veuillez corriger les erreurs de saisie ci-dessous.";
         
-        // Déclencher un focus sur le premier champ invalide
+        // Déclencher un focus sur le premier champ invalide (utilisant l'ordre de la validation)
         if (!validerChamp(nom, 'nom', 'saisieNom')) document.getElementById("nom").focus();
         else if (!validerChamp(prenom, 'prénom', 'saisiePrenom')) document.getElementById("prenom").focus();
-        else if (adresse === "") document.getElementById("adresse").focus();
-        else if (ville === "") document.getElementById("ville").focus();
-        else if (codePostal === "") document.getElementById("codePostal").focus();
-        else if (abonnementNews === "Oui" && adresseMail === "") document.getElementById("adresseMail").focus();
+        else if (!validerChamp(adresse, 'adresse', 'saisieAdresse')) document.getElementById("adresse").focus();
+        else if (!validerChamp(ville, 'ville', 'saisieVille')) document.getElementById("ville").focus();
+        else if (!validerChamp(codePostal, 'code postal', 'saisieCodePostal')) document.getElementById("codePostal").focus();
+        // Si l'abonnement est coché et l'email est vide
+        else if (abonnementNews === "Oui" && document.getElementById("adresseMail").value.trim() === "") document.getElementById("adresseMail").focus();
     }
 }
