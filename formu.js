@@ -6,10 +6,10 @@
 // ******************************************************
 
 /**
- * Fonction principale de vérification et de récapitulatif.
- * Récupère les données du formulaire, vérifie leur intégrité, et affiche le récapitulatif.
- * @param {Event} event L'objet événement de la soumission du formulaire.
- */
+* Fonction principale de vérification et de récapitulatif.
+* Récupère les données du formulaire, vérifie leur intégrité, et affiche le récapitulatif.
+* @param {Event} event L'objet événement de la soumission du formulaire.
+*/
 function verification(event) {
     // Empêche la soumission par défaut du formulaire, permettant au JS de gérer l'action.
     if (event) {
@@ -17,20 +17,20 @@ function verification(event) {
     }
     
     // 1. Récupération des valeurs des champs simples (getElementById)
-    let civilite = document.getElementById("civilite").value;
-    let nom = document.getElementById("nom").value.trim();
-    let prenom = document.getElementById("prenom").value.trim();
-    let adresse = document.getElementById("adresse").value.trim();
-    let ville = document.getElementById("ville").value.trim();
-    let codePostal = document.getElementById("codePostal").value.trim();
-    let adresseMail = document.getElementById("adresseMail").value.trim();
+    var civilite = document.getElementById("civilite").value;
+    var nom = document.getElementById("nom").value.trim();
+    var prenom = document.getElementById("prenom").value.trim();
+    var adresse = document.getElementById("adresse").value.trim();
+    var ville = document.getElementById("ville").value.trim();
+    var codePostal = document.getElementById("codePostal").value.trim();
+    var adresseMail = document.getElementById("adresseMail").value.trim();
 
     // 2. Récupération de la Catégorie Socio-Professionnelle (radio - getElementsByName)
-    let professionRadios = document.getElementsByName("profession");
-    let professionChoisie = "Non spécifié";
+    var professionRadios = document.getElementsByName("profession");
+    var professionChoisie = "Non spécifié";
 
     // Parcourir le tableau des éléments radio pour trouver celui qui est 'checked'
-    for (let i = 0; i < professionRadios.length; i++) {
+    for (var i = 0; i < professionRadios.length; i++) {
         if (professionRadios[i].checked) {
             professionChoisie = professionRadios[i].value;
             break;
@@ -38,39 +38,55 @@ function verification(event) {
     }
 
     // 3. Récupération de l'abonnement Newsletter (checkbox - getElementsByName)
-    let newsCheckboxes = document.getElementsByName("news");
-    let newsCheckbox = newsCheckboxes[0]; 
-    let abonnementNews = newsCheckbox.checked ? "Oui" : "Non";
+    var newsCheckboxes = document.getElementsByName("news");
+    // S'assurer que la checkbox existe
+    var newsCheckbox = newsCheckboxes.length > 0 ? newsCheckboxes[0] : { checked: false }; 
+    var abonnementNews = newsCheckbox.checked ? "Oui" : "Non";
     
-    // --- PARTIE STRUCTURES DE TESTS (if) ET VALIDATION (POUR ALLER PLUS LOIN) ---
+    // --- PARTIE STRUCTURES DE TESTS (if) ET VALIDATION ---
     
-    let estValide = true;
-    let messageErreur = "Erreurs de saisie :\n";
+    var estValide = true;
+    var messageErreur = "Erreurs de saisie :\n";
 
-    // Fonction d'aide pour la validation des champs de texte
-    const validerChamp = (valeur, nomChamp, idSpan) => {
-        const spanErreur = document.getElementById(idSpan);
+    /**
+     * Fonction d'aide pour la validation des champs de texte et l'affichage d'erreur local.
+     * Note: La fonction est définie avec 'var' (variable globale de fonction) pour rester cohérente.
+     */
+    var validerChamp = (valeur, nomChamp, idSpan) => {
+        var spanErreur = document.getElementById(idSpan); // Remplacé 'const' par 'var'
+        var valid = true; // Remplacé 'let' par 'var'
+
         if (valeur === "") {
             messageErreur += `- Veuillez saisir votre ${nomChamp}.\n`;
-            if (spanErreur) {
-                spanErreur.textContent = `Veuillez saisir votre ${nomChamp}`;
+            valid = false;
+        } 
+        
+        // Affichage dans le span si l'ID existe
+        if (spanErreur) {
+            if (!valid) {
+                spanErreur.textContent = `Veuillez saisir votre ${nomChamp}.`;
                 spanErreur.style.color = 'red';
-            }
-            return false;
-        } else {
-             if (spanErreur) {
+            } else {
                 spanErreur.textContent = "";
             }
-            return true;
         }
+        return valid;
     };
     
-    // 1. Validation des champs obligatoires (Nom, Prénom, Adresse, Ville, Code Postal)
-    // Note: Le HTML de base n'a des spans d'erreur que pour nom et prenom. 
-    // On utilise la console pour les autres champs.
-    estValide &= validerChamp(nom, 'nom', 'saisieNom');
-    estValide &= validerChamp(prenom, 'prenom', 'saisiePrenom');
+    // Cache le message d'erreur global avant de recommencer la validation
+    var formContainer = document.getElementById('contact'); // Remplacé 'const' par 'var'
+    
+    // Suppression de l'ancienne boîte d'erreur si elle existe
+    var errorDiv = document.getElementById('global-error-message'); // Remplacé 'const' par 'var'
+    if (errorDiv) {
+        errorDiv.remove();
+    }
 
+    // 1. Validation des champs obligatoires (Nom, Prénom, Adresse, Ville, Code Postal)
+    estValide = validerChamp(nom, 'nom', 'saisieNom') && estValide;
+    estValide = validerChamp(prenom, 'prénom', 'saisiePrenom') && estValide;
+
+    // Pour les autres champs obligatoires
     if (adresse === "") {
         messageErreur += "- Veuillez saisir votre adresse.\n";
         estValide = false;
@@ -86,7 +102,7 @@ function verification(event) {
 
     // 2. Validation du champ Mail si la checkbox est cochée
     if (abonnementNews === "Oui" && adresseMail === "") {
-        messageErreur += "- Veuillez saisir votre mail.\n";
+        messageErreur += "- Veuillez saisir votre adresse mail pour l'abonnement à la newsletter.\n";
         estValide = false;
     }
 
@@ -94,7 +110,7 @@ function verification(event) {
     
     if (estValide) {
         // Construction du contenu HTML pour la nouvelle fenêtre
-        let contenuRecap = `
+        var contenuRecap = `
             <!DOCTYPE html>
             <html lang="fr">
             <head>
@@ -108,7 +124,17 @@ function verification(event) {
                     }
                     h2 { color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
                     p { margin: 5px 0; line-height: 1.4; }
-                    strong { display: inline-block; width: 150px; }
+                    strong { display: inline-block; min-width: 140px; margin-right: 10px; }
+                    button {
+                        transition: all 0.2s ease;
+                        padding: 10px 15px; 
+                        background-color: #007bff; 
+                        color: white; 
+                        border: none; 
+                        border-radius: 5px; 
+                        cursor: pointer;
+                    }
+                    button:hover { background-color: #0056b3; }
                 </style>
             </head>
             <body>
@@ -123,46 +149,46 @@ function verification(event) {
                     <p><strong>Catégorie Pro:</strong> ${professionChoisie}</p>
                     <p><strong>Abonnement News:</strong> ${abonnementNews}</p>
                     ${abonnementNews === "Oui" ? `<p><strong>Adresse Mail:</strong> ${adresseMail}</p>` : ''}
-                    <p style="margin-top: 20px;">C'est une fenêtre de hauteur (400 pixels) et de largeur (400 pixels).</p>
-                    <button onclick="window.close()" style="margin-top: 15px; padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Fermer</button>
+                    <p style="margin-top: 20px;">C'est une fenêtre de hauteur (1500 pixels) et de largeur (400 pixels).</p>
+                    <button onclick="window.close()">Fermer</button>
                 </div>
             </body>
             </html>
         `;
 
         // Utiliser la méthode open() de la classe window
-        // Les dimensions demandées sont : hauteur 1500px et largeur 400px (je vais inverser pour un meilleur affichage)
-        // La consigne visuelle montre une petite fenêtre, j'utilise donc 400x400 pour un meilleur rendu.
-        // Utiliser les dimensions du TP (hauteur 1500, largeur 400)
-        let nouvelleFenetre = window.open("", "RecapitulatifNao", "width=400,height=1500,scrollbars=yes,resizable=yes");
+        // Dimensions utilisées: width=400, height=1500
+        var nouvelleFenetre = window.open("", "RecapitulatifNao", "width=400,height=1500,scrollbars=yes,resizable=yes");
         
         // Écrire le contenu dans la nouvelle fenêtre
         nouvelleFenetre.document.write(contenuRecap);
         nouvelleFenetre.document.close();
         
     } else {
-        // Si la validation échoue, afficher le message d'erreur (pop-up)
-        // NOTE: Les alertes/pop-ups sont généralement interdits dans ce type d'environnement.
-        // On affiche donc dans la console ou on utilise un message plus visible dans le DOM.
-        // Par défaut, nous utilisons console.log pour ne pas bloquer l'interface.
+        // Si la validation échoue, afficher le message d'erreur dans le DOM
         console.error(messageErreur);
         
-        // Une méthode alternative qui s'approche de l'esprit du TP sans utiliser alert():
-        // Créer un div de message d'erreur temporaire si la validation échoue
-        const formContainer = document.getElementById('contact');
-        let errorDiv = document.getElementById('global-error-message');
-        if (!errorDiv) {
-            errorDiv = document.createElement('div');
-            errorDiv.id = 'global-error-message';
-            errorDiv.style.color = 'red';
-            errorDiv.style.fontWeight = 'bold';
-            errorDiv.style.marginBottom = '10px';
-            formContainer.insertBefore(errorDiv, formContainer.firstChild.nextSibling); // Insérer sous le h2
-        }
-        errorDiv.textContent = "Veuillez corriger les erreurs de saisie ci-dessous.";
+        // Créer un div de message d'erreur temporaire
+        // Étant donné que nous avons retiré l'élément en début de fonction, nous le recréons.
+        var newErrorDiv = document.createElement('div');
+        newErrorDiv.id = 'global-error-message';
+        newErrorDiv.className = 'text-red-600 font-bold mb-4 p-3 bg-red-50 border border-red-200 rounded-lg';
         
-        // Déclencher une petite animation visuelle sur les champs non valides
+        // Trouver l'endroit pour insérer: après le h2 du formulaire
+        var h2 = formContainer.querySelector('h2');
+        if (h2) {
+            formContainer.insertBefore(newErrorDiv, h2.nextSibling);
+        } else {
+            formContainer.insertBefore(newErrorDiv, formContainer.firstChild); 
+        }
+        newErrorDiv.textContent = "ATTENTION: Veuillez corriger les erreurs de saisie ci-dessous.";
+        
+        // Déclencher un focus sur le premier champ invalide
         if (!validerChamp(nom, 'nom', 'saisieNom')) document.getElementById("nom").focus();
-        else if (!validerChamp(prenom, 'prenom', 'saisiePrenom')) document.getElementById("prenom").focus();
+        else if (!validerChamp(prenom, 'prénom', 'saisiePrenom')) document.getElementById("prenom").focus();
+        else if (adresse === "") document.getElementById("adresse").focus();
+        else if (ville === "") document.getElementById("ville").focus();
+        else if (codePostal === "") document.getElementById("codePostal").focus();
+        else if (abonnementNews === "Oui" && adresseMail === "") document.getElementById("adresseMail").focus();
     }
 }
