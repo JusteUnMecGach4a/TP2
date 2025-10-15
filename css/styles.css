@@ -12,6 +12,7 @@
   --color-accent: #3b82f6;        /* Bleu vif (éléments clés, liens) */
   --color-secondary-bg: #374151;  /* Gris moyen (sections, cartes) */
   --color-border: #4b5563;        /* Gris des bordures subtil */
+  --nav-width: 200px;             /* Nouvelle variable pour la largeur de la barre de navigation latérale */
 }
 
 body {
@@ -20,10 +21,11 @@ body {
   line-height: 1.6;
   background-color: var(--color-dark);
   color: var(--color-light);
-  padding: 20px;
+  /* Le padding droit et bas est de 20px, mais le padding gauche doit être la largeur de la barre de nav */
+  padding: 20px 20px 20px var(--nav-width);
   margin: 0;
-  /* Ajout d'une marge en haut pour laisser de la place à la barre de navigation fixe */
-  padding-top: 70px; 
+  /* Suppression de l'ancienne marge du haut */
+  /* padding-top: 70px; */ 
 }
 
 /* --- EN-TÊTE --- */
@@ -40,32 +42,37 @@ header h1 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Ombre légère */
 }
 
-/* --- NAVIGATION --- */
+/* --- NAVIGATION (Barre latérale fixe) --- */
 nav {
-  /* Fixe la barre de navigation en haut de la page */
+  /* Fixe la barre de navigation à gauche de la page */
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  /* Utilisation de la variable de largeur */
+  width: var(--nav-width); 
+  /* Hauteur pleine vue */
+  height: 100vh; 
   background-color: var(--color-secondary-bg);
   z-index: 1000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5); /* Ombre sur la droite */
+  
+  /* Centrage vertical des éléments de la nav (si vous souhaitez qu'ils soient au milieu) */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
   
   /* Ajustements du style */
-  display: flex;
-  justify-content: center;
-  /* suppression de gap: 20px; */
-  margin-bottom: 0;
-  padding: 0; /* Réinitialisation du padding du nav pour mieux gérer les liens */
-  border-bottom: 1px solid var(--color-border);
+  padding: 0; 
+  border-bottom: none; /* Plus de bordure du bas */
 }
 
 /* Stylisation de la liste principale dans la navigation */
 nav ul {
   list-style-type: none;
   margin: 0;
-  padding: 0;
-  display: flex; /* Alignement horizontal des éléments principaux */
+  padding: 10px 0;
+  /* Les éléments de la liste sont affichés verticalement */
+  display: block; 
 }
 
 /* Les éléments de la liste principale */
@@ -77,40 +84,37 @@ a {
   font-size: 1em;
   font-variant: normal; 
   background-color: transparent;
-  color: var(--color-light); /* Couleur par défaut blanche pour meilleure visibilité sur le fond sombre de la nav */
+  color: var(--color-light); 
   text-decoration: none;
-  padding: 15px 20px; /* Augmentation du padding pour une barre plus visible */
+  padding: 15px 20px; 
   transition: all 0.3s ease; 
-  border-radius: 0; /* Pas de coins arrondis pour les liens de la barre fixe */
+  border-radius: 0; 
   display: block;
 }
 
 a:hover, a:focus {
   background-color: var(--color-accent);
   color: var(--color-dark); 
-  text-decoration: none; /* Supprime le soulignement au survol */
+  text-decoration: none; 
 }
 
 /* --- Dropdown Logic (Liste qui se déplie au survol) --- */
 nav li ul {
-  /* Le sous-menu par défaut est caché (répond à la demande de déploiement au survol) */
-  display: none;
+  /* Le sous-menu par défaut est caché */
+  display: none; 
   
-  /* Positionnement pour le placer sous l'élément parent */
+  /* Positionnement pour le placer sur la droite de l'élément parent */
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 0; /* Aligné avec le haut du lien parent */
+  left: var(--nav-width); /* Décalé vers la droite de la barre de navigation */
   
   /* Style du conteneur du sous-menu */
   background-color: var(--color-secondary-bg);
   min-width: 180px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); /* Ombre pour flotter sur le contenu */
   border-radius: 4px;
   z-index: 2000;
   padding: 5px 0;
-  
-  /* S'assurer que les éléments de la liste déroulante sont en colonne */
-  display: block;
 }
 
 /* Règle de survol pour afficher le sous-menu */
