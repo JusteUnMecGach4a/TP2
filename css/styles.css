@@ -1,16 +1,17 @@
 /* ----------------------------------------------------------------
-    FEUILLE DE STYLE FINALE (THÈME SOMBRE COHÉRENT)
+    FEUILLE DE STYLE FINALE (THÈME SOMBRE COHÉRENT ET DOUX)
     Inclut la navigation moderne, le formulaire lisible, et l'en-tête/pied de page stylisés.
+    Couleurs ajustées pour plus de "pâleur" et de douceur.
 ---------------------------------------------------------------- */
 
 /* Variables pour le thème sombre (facilite les changements) */
 :root {
-    --color-background: #1e1e1e; /* Fond principal très sombre */
-    --color-surface: #2d2d2d;    /* Fond des sections/formulaires/nav */
-    --color-text: #f0f0f0;       /* Texte clair */
-    --color-border: #444444;     /* Bordures sombres et discrètes */
-    --color-accent: #3498db;     /* Bleu accent pour les liens/focus */
-    --color-error: #e74c3c;      /* Rouge pour les erreurs */
+    --color-background: #222e3c; /* Bleu-gris foncé, plus doux que le noir */
+    --color-surface: #364758;    /* Gris bleu moyen (fond des sections/formulaires), pale et visible */
+    --color-text: #ffffff;       /* Texte blanc pur pour un contraste maximal */
+    --color-border: #607d8b;     /* Bordures bleutées/grises claires et subtiles */
+    --color-accent: #81d4fa;     /* Bleu ciel très pale et vif (accent doux) */
+    --color-error: #ffab91;      /* Rouge orangé pale pour les erreurs */
 }
 
 body {
@@ -28,7 +29,7 @@ header {
     padding: 15px 20px;
     margin-bottom: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Ombre plus prononcée */
     display: flex;
     align-items: center;
 }
@@ -117,9 +118,9 @@ nav li ul a {
 /* --- Base Formulaire et Sections --- */
 form div {
     margin-bottom: 15px;
-    padding: 10px;
+    padding: 15px; /* Augmentation du padding pour aérer */
     background-color: var(--color-surface); /* Pour faire ressortir les champs */
-    border-radius: 6px;
+    border-radius: 8px; /* Coins plus arrondis */
     border: 1px solid var(--color-border);
 }
 
@@ -143,7 +144,7 @@ label {
     }
     input[type="text"], input[type="tel"], input[type="email"], input[type="number"], textarea, select {
         flex-grow: 1;
-        padding: 8px;
+        padding: 10px; /* Augmentation du padding des inputs */
         border: 1px solid var(--color-border);
         border-radius: 4px;
         background-color: var(--color-background); /* Champ sur fond très sombre */
@@ -184,11 +185,11 @@ input[type="submit"], input[type="reset"] {
 
 input[type="submit"] {
     background-color: var(--color-accent); 
-    color: var(--color-text);
+    color: var(--color-background); /* Texte sombre sur bouton accent pale */
 }
 
 input[type="submit"]:hover {
-    background-color: #2980b9; /* Nuance plus foncée de l'accent */
+    background-color: #4fc3f7; /* Nuance plus foncée de l'accent */
 }
 
 input[type="reset"] {
@@ -197,7 +198,7 @@ input[type="reset"] {
 }
 
 input[type="reset"]:hover {
-    background-color: #666666;
+    background-color: #90a4ae; /* Gris plus clair au survol */
 }
 
 /* --- PIED DE PAGE (FOOTER) --- */
