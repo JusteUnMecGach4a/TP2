@@ -43,6 +43,21 @@ function verification(event) {
     var newsCheckbox = newsCheckboxes.length > 0 ? newsCheckboxes[0] : { checked: false }; 
     var abonnementNews = newsCheckbox.checked ? "Oui" : "Non";
     
+    // ***************************************************************
+    // INSTRUCTIONS CONSOLE.LOG POUR DÉBOGAGE
+    // Affiche le contenu des variables récupérées.
+    // ***************************************************************
+    console.log("--- Récupération des données du formulaire ---");
+    console.log("Nom complet : " + nom + " " + prenom);
+    console.log("Adresse : " + adresse + ", " + ville + " " + codePostal);
+    console.log("Profession : " + professionChoisie);
+    console.log("Abonnement Newsletter : " + abonnementNews);
+    if (abonnementNews === "Oui") {
+        console.log("Email : " + adresseMail);
+    }
+    console.log("----------------------------------------------");
+    // ***************************************************************
+    
     // --- PARTIE STRUCTURES DE TESTS (if) ET VALIDATION ---
     
     var estValide = true;
@@ -105,6 +120,18 @@ function verification(event) {
         messageErreur += "- Veuillez saisir votre adresse mail pour l'abonnement à la newsletter.\n";
         estValide = false;
     }
+
+    // ***************************************************************
+    // INSTRUCTIONS CONSOLE.LOG POUR DÉBOGAGE
+    // Affiche l'état de la validation après les tests.
+    // ***************************************************************
+    console.log("--- Résultat de la validation ---");
+    console.log("Est valide : " + estValide);
+    if (!estValide) {
+        console.error(messageErreur);
+    }
+    console.log("-----------------------------------");
+    // ***************************************************************
 
     // --- LOGIQUE D'AFFICHAGE DU RÉCAPITULATIF (window.open) ---
     
