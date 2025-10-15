@@ -72,20 +72,31 @@ function verification(event) {
 
     /**
      * Fonction d'aide pour la validation des champs de texte et l'affichage d'erreur local (dans le span).
+     * @param {string} valeur La valeur du champ.
+     * @param {string} nomChamp Le nom du champ (pour le message d'erreur).
+     * @param {string} idSpan L'ID du span d'erreur local.
+     * @param {string | null} regexPattern Le motif regex à vérifier (par exemple, /^(\d{5})?$/ pour 5 chiffres ou vide).
+     * @param {string | null} regexErrorMessage Le message d'erreur spécifique pour la regex.
      */
-    var validerChamp = (valeur, nomChamp, idSpan) => {
+    var validerChamp = (valeur, nomChamp, idSpan, regexPattern = null, regexErrorMessage = null) => {
         var spanErreur = document.getElementById(idSpan);
         var valid = true;
+        var specificError = "";
 
         if (valeur === "") {
+            specificError = `Veuillez saisir votre ${nomChamp}.`;
             messageErreur += `- Veuillez saisir votre ${nomChamp}.\n`;
             valid = false;
-        } 
+        } else if (regexPattern && !regexPattern.test(valeur)) {
+            specificError = regexErrorMessage;
+            messageErreur += `- ${regexErrorMessage}\n`;
+            valid = false;
+        }
         
         // Affichage dans le span si l'ID existe
         if (spanErreur) {
             if (!valid) {
-                spanErreur.textContent = `Veuillez saisir votre ${nomChamp}.`;
+                spanErreur.textContent = specificError;
                 spanErreur.style.color = 'red';
                 spanErreur.style.fontSize = '0.9em';
             } else {
@@ -101,19 +112,34 @@ function verification(event) {
         errorDiv.remove();
     }
 
-    // 1. Validation de TOUS les champs obligatoires (Nom, Prénom, Adresse, Ville, Code Postal)
-    // L'appel à validerChamp met à jour estValide et affiche le message local si le champ est vide.
-    estValide = validerChamp(nom, 'nom', 'saisieNom') && estValide;
-    estValide = validerChamp(prenom, 'prénom', 'saisiePrenom') && estValide;
+    // --- EXPRESSIONS RÉGULIÈRES (REGEX) ---
+    // Regex pour les noms/prénoms (lettres, espaces, tirets, accents)
+    var regexAlpha = /^[a-zA-ZÀ-ÿ\s'-]+$/;
+    var msgAlpha = "Le champ doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).";
+    
+    // Regex pour le code postal (uniquement des chiffres)
+    var regexNum = /^\d+$/;
+    var msgNum = "Le Code Postal doit contenir uniquement des chiffres.";
+
+    // 1. Validation de TOUS les champs obligatoires 
+    // Nom et Prénom: obligatoire ET lettres/accents uniquement
+    estValide = validerChamp(nom, 'nom', 'saisieNom', regexAlpha, msgAlpha) && estValide;
+    estValide = validerChamp(prenom, 'prénom', 'saisiePrenom', regexAlpha, msgAlpha) && estValide;
+
+    // Adresse et Ville: obligatoire (pas de validation de format complexe)
     estValide = validerChamp(adresse, 'adresse', 'saisieAdresse') && estValide;
     estValide = validerChamp(ville, 'ville', 'saisieVille') && estValide;
-    estValide = validerChamp(codePostal, 'code postal', 'saisieCodePostal') && estValide;
+    
+    // Code Postal: obligatoire ET chiffres uniquement
+    estValide = validerChamp(codePostal, 'code postal', 'saisieCodePostal', regexNum, msgNum) && estValide;
     
 
     // 2. Validation du champ Mail si la checkbox est cochée
     if (abonnementNews === "Oui") {
-        // Réutilise la fonction validerChamp qui gère l'affichage du span 'saisieAdresseMail'
-        estValide = validerChamp(adresseMail, 'adresse mail', 'saisieAdresseMail') && estValide;
+        // Validation basique de l'email
+        var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var msgEmail = "L'adresse mail n'est pas valide.";
+        estValide = validerChamp(adresseMail, 'adresse mail', 'saisieAdresseMail', regexEmail, msgEmail) && estValide;
     } else {
         // Si la newsletter n'est PAS cochée, on s'assure que le message d'erreur local est effacé
         var spanErreurMail = document.getElementById('saisieAdresseMail');
@@ -196,11 +222,13 @@ function verification(event) {
         alert("ATTENTION: Veuillez corriger les erreurs suivantes :\n\n" + messageErreur);
         
         // 2. Déclencher un focus sur le premier champ invalide pour guider l'utilisateur
-        if (!validerChamp(nom, 'nom', 'saisieNom')) document.getElementById("nom").focus();
-        else if (!validerChamp(prenom, 'prénom', 'saisiePrenom')) document.getElementById("prenom").focus();
+        // La fonction validerChamp est appelée ici uniquement pour déterminer le focus, 
+        // les messages d'erreur sont déjà accumulés.
+        if (!validerChamp(nom, 'nom', 'saisieNom', regexAlpha, msgAlpha)) document.getElementById("nom").focus();
+        else if (!validerChamp(prenom, 'prénom', 'saisiePrenom', regexAlpha, msgAlpha)) document.getElementById("prenom").focus();
         else if (!validerChamp(adresse, 'adresse', 'saisieAdresse')) document.getElementById("adresse").focus();
         else if (!validerChamp(ville, 'ville', 'saisieVille')) document.getElementById("ville").focus();
-        else if (!validerChamp(codePostal, 'code postal', 'saisieCodePostal')) document.getElementById("codePostal").focus();
-        else if (abonnementNews === "Oui" && document.getElementById("adresseMail").value.trim() === "") document.getElementById("adresseMail").focus();
+        else if (!validerChamp(codePostal, 'code postal', 'saisieCodePostal', regexNum, msgNum)) document.getElementById("codePostal").focus();
+        else if (abonnementNews === "Oui" && !validerChamp(adresseMail, 'adresse mail', 'saisieAdresseMail', regexEmail, msgEmail)) document.getElementById("adresseMail").focus();
     }
 }
