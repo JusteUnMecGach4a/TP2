@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+	
+	<head>
+		<link rel="icon" type="image/png" href="nao.png">
+		<meta charset="UTF-8">
+		<title>Contact : Robot NOA</title>
+	</head>
+
+	<body> 
+
+		<header>
+				<img src="logo.PNG" alt="Ceci est le logo du lycée">
+				<h1> Site de ressources et d'informations sur NAO </h1>
+
+		</header>
+
+
+		<nav>
+			<ul>
+				<li><a href="index.html">Accueil</a></li>
+				<li><a href="presentation.html">Présentation</a></li>
+				<li><a href="moteur.html">Moteurs</a></li>
+				<li><a href="developpement.html">Developpement</a>
+					<ul>
+						<li><a href="developpement.html#Choregraphe" >Chorégraphie</a></li>
+						<li><a href="developpement.html#Videos" >Vidéos</a></li>
+						<li><a href="developpement.html#Python" >Scripts Python</a></li>
+					</ul></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+		</nav>
+		
+		<section>
+			<form id="contact" enctype="text/plain">
+			<h2>Formulaire de Contact</h2>
+			
+			<div>
+			<label for="civilite">Civilité : </label>
+				<select id="civilite">
+				  <option >Monsieur</option>
+				  <option >Madame</option>
+				  <option >Mademoiselle</option>
+				</select>
+			</div>
+			<div>
+				<label for="nom">Nom :</label>
+				<input type="text" id="nom" size="30" value="" onblur="afficheOubli('nom','saisieNom')"/>
+				<span id="saisieNom" ></span>
+			</div>
+			
+			<div>
+				<label for="prenom">Prénom : </label>
+				<input type="text" id="prenom" size="30" onblur='afficheOubli(this.id,"saisiePrenom")' />
+				<span id="saisiePrenom" ></span>
+			</div>
+
+			<div>
+				<label for="adresse">Adresse : </label>
+				<textarea id="adresse" rows="10" cols="10"></textarea>
+			</div>
+
+			<div>
+				<label for="ville">Ville : </label>
+				<input type="text" id="ville" size="30" /><br/>
+			</div>
+
+			<div>
+				<label for="codePostal">Code Postal : </label>
+				<input type="text" id="codePostal" maxlength="5" /><br/>
+			</div>
+
+
+			<div>
+				<input type="checkbox" name="news" id="news" valeur="oui" />
+				Oui, je veux recevoir des informations.<input type="text" id="adresseMail" size="60" />
+			</div>
+
+			<div>
+				<label for="profession">Catégorie socio-professionel : </label>
+				<input type="radio" name="profession" value="Employé" />Employé
+				<input type="radio" name="profession" value="cadre moyen" />Cadre Moyen
+				<input type="radio" name="profession" value="cadre superieur" />Cadre Supérieur
+				<input type="radio" name="profession" value="artisan" />Artisan
+				<input type="radio" name="profession" value="enseignant" checked />Enseignant
+			</div>
+			<div>
+				<input type="submit" value="Envoyer" onclick="verification()" />
+				<input type="reset" value="Réinitialiser" />
+			</div>
+			</form>
+		</section>
+
+		<footer>
+			
+				<p>Site à visée pédagogique pour les étudiants du BTS CIEL1 IR du lycée Raymond Poincaré Bar-le-duc</p>
+				<p>Le contenu de ce site n'est pas destiné à une publication sur Internet</p>
+		</footer>
+	
+	</body>
+</html>
