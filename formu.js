@@ -21,7 +21,8 @@ function verification(event) {
     var nom = document.getElementById("nom").value.trim();
     var prenom = document.getElementById("prenom").value.trim();
     var adresse = document.getElementById("adresse").value.trim();
-    var ville = document.getElementById("ville").trim();
+    // CORRECTION TYPEERROR: Ajout de .value pour que .trim fonctionne
+    var ville = document.getElementById("ville").value.trim(); 
     var codePostal = document.getElementById("codePostal").value.trim();
     var adresseMail = document.getElementById("adresseMail").value.trim();
 
