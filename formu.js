@@ -60,15 +60,18 @@ var afficheOubli = (champID, spanID) => {
             spanErreur.textContent = "";
             return;
         }
-    } else {
-        // Pour Adresse, Ville (vérification de vide uniquement)
-        nomChamp = champID;
+    } else if (champID === 'adresse') { // Ajout de l'adresse
+        nomChamp = 'adresse';
+    } else if (champID === 'ville') { // Ajout de la ville
+        nomChamp = 'ville';
     }
-
-
+    
+    // Validation principale: si vide
     if (valeur === "") {
         specificError = `Veuillez saisir votre ${nomChamp}.`;
-    } else if (regexPattern && !regexPattern.test(valeur)) {
+    } 
+    // Validation Regex: si non vide mais le format est mauvais
+    else if (regexPattern && !regexPattern.test(valeur)) {
         specificError = regexErrorMessage;
     }
 
