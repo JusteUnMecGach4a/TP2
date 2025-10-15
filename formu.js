@@ -5,6 +5,15 @@
 // Date : 2025-10-15
 // ******************************************************
 
+// --- EXPRESSIONS RÉGULIÈRES (GLOBALES POUR LES DEUX FONCTIONS) ---
+var regexAlpha = /^[a-zA-ZÀ-ÿ\s'-]+$/;
+var msgAlpha = "Doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).";
+var regexNum = /^\d+$/;
+var msgNum = "Doit contenir uniquement des chiffres.";
+var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+var msgEmail = "L'adresse mail n'est pas valide.";
+
+
 /**
 * Fonction pour la validation immédiate (onblur) des champs.
 * Elle affiche l'erreur en temps réel sans attendre la soumission du formulaire.
@@ -20,16 +29,7 @@ var afficheOubli = (champID, spanID) => {
 
     var valeur = inputElement.value.trim();
     var specificError = "";
-
-    // --- EXPRESSIONS RÉGULIÈRES (RÉCUPÉRÉES DE LA FONCTION PRINCIPALE) ---
-    var regexAlpha = /^[a-zA-ZÀ-ÿ\s'-]+$/;
-    var msgAlpha = "Doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).";
-    var regexNum = /^\d+$/;
-    var msgNum = "Doit contenir uniquement des chiffres.";
-    var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    var msgEmail = "L'adresse mail n'est pas valide.";
-
-
+    
     // Détermination des règles à appliquer
     var nomChamp = "";
     var regexPattern = null;
@@ -84,16 +84,46 @@ var afficheOubli = (champID, spanID) => {
     }
 };
 
+/**
+ * Configure les écouteurs d'événements onblur pour les champs requis.
+ * Cela permet la validation en temps réel sans avoir à modifier le HTML.
+ */
+var setupOnBlurListeners = () => {
+    // Liste des champs à surveiller et leur ID de span d'erreur
+    var fields = [
+        { id: 'nom', spanId: 'saisieNom' },
+        { id: 'prenom', spanId: 'saisiePrenom' },
+        { id: 'adresse', spanId: 'saisieAdresse' },
+        { id: 'ville', spanId: 'saisieVille' },
+        { id: 'codePostal', spanId: 'saisieCodePostal' },
+        { id: 'adresseMail', spanId: 'saisieAdresseMail' },
+    ];
+
+    fields.forEach(field => {
+        var element = document.getElementById(field.id);
+        if (element) {
+            // Ajoute l'écouteur onblur qui appelle afficheOubli
+            element.addEventListener('blur', () => afficheOubli(field.id, field.spanId));
+        }
+    });
+};
+
 
 /**
 * Fonction principale de vérification et de récapitulatif.
-* Reste la source unique pour la validation complète et l'affichage final (alert/récapitulatif).
 * @param {Event} event L'objet événement de la soumission du formulaire.
 */
 function verification(event) {
     // Empêche la soumission par défaut du formulaire (rechargement de la page).
     if (event) {
         event.preventDefault();
+    }
+
+    // Configure les écouteurs onblur une seule fois si ce n'est pas déjà fait
+    // On s'assure que cette configuration est faite pour la validation immédiate
+    if (typeof verification.listenersSetup === 'undefined') {
+        setupOnBlurListeners();
+        verification.listenersSetup = true; // Marque le setup comme effectué
     }
     
     // 1. Récupération des valeurs des champs simples (getElementById)
@@ -136,14 +166,6 @@ function verification(event) {
     var estValide = true;
     var messageErreur = ""; // On commence sans le titre pour le pop-up
     var formContainer = document.getElementById('contact');
-
-    // --- EXPRESSIONS RÉGULIÈRES (REGEX) ---
-    var regexAlpha = /^[a-zA-ZÀ-ÿ\s'-]+$/;
-    var msgAlpha = "Le champ doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).";
-    var regexNum = /^\d+$/;
-    var msgNum = "Le Code Postal doit contenir uniquement des chiffres.";
-    var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    var msgEmail = "L'adresse mail n'est pas valide.";
 
     /**
      * Fonction d'aide pour la validation des champs de texte et l'affichage d'erreur local (dans le span).
@@ -280,6 +302,7 @@ function verification(event) {
         alert("ATTENTION: Veuillez corriger les erreurs suivantes :\n\n" + messageErreur);
         
         // 2. Déclencher un focus sur le premier champ invalide pour guider l'utilisateur
+        // La fonction afficheOubli est déjà capable de faire le travail de focus.
         if (document.getElementById("nom").value.trim() === "" || !regexAlpha.test(document.getElementById("nom").value.trim())) {
             document.getElementById("nom").focus();
         } else if (document.getElementById("prenom").value.trim() === "" || !regexAlpha.test(document.getElementById("prenom").value.trim())) {
