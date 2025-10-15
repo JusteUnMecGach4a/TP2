@@ -7,9 +7,16 @@
 
 /**
  * Fonction principale de vérification et de récapitulatif.
- * Récupère les données du formulaire.
+ * Récupère les données du formulaire et empêche la soumission par défaut.
+ * @param {Event} event L'objet événement de la soumission du formulaire.
  */
-function verification() {
+function verification(event) {
+    // Empêche la soumission par défaut du formulaire, permettant au JS de gérer l'action.
+    // Ceci est crucial lorsque la fonction est appelée via l'attribut onsubmit du formulaire.
+    if (event) {
+        event.preventDefault();
+    }
+    
     // 1. Récupération des valeurs des champs simples (getElementById)
     let civilite = document.getElementById("civilite").value;
     let nom = document.getElementById("nom").value;
@@ -45,10 +52,19 @@ function verification() {
     // 1. Ajouter la validation des champs vides (POUR ALLER PLUS LOIN).
     // 2. Utiliser window.open() pour créer la nouvelle fenêtre de récapitulatif.
     
+    console.log("--- Récapitulatif des données saisies ---");
     console.log("Civilité: " + civilite);
     console.log("Nom: " + nom);
+    console.log("Prénom: " + prenom);
+    console.log("Adresse: " + adresse.replace(/\n/g, ' '));
+    console.log("Ville: " + ville);
+    console.log("Code Postal: " + codePostal);
     console.log("Catégorie Pro: " + professionChoisie);
     console.log("Abonnement News: " + abonnementNews);
+    if (abonnementNews === "Oui") {
+        console.log("Adresse Mail: " + adresseMail);
+    }
+    console.log("--- Fin du récapitulatif ---");
 }
 
 // NOTE : La fonction afficheOubli() a été retirée, conformément à votre demande de minimalisme.
