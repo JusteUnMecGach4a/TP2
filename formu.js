@@ -10,6 +10,8 @@ var regexAlpha = /^[a-zA-ZÀ-ÿ\s'-]+$/;
 var msgAlpha = "Doit contenir uniquement des lettres et des caractères spéciaux (espaces, tirets, accents).";
 var regexNum = /^\d+$/;
 var msgNum = "Doit contenir uniquement des chiffres.";
+var regexTel = /^\d{10}$/; // Ajout d'une regex spécifique pour 10 chiffres (format français)
+var msgTel = "Le numéro de téléphone doit contenir exactement 10 chiffres (ex: 0123456789).";
 var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 var msgEmail = "L'adresse mail n'est pas valide.";
 
@@ -44,6 +46,10 @@ var afficheOubli = (champID, spanID) => {
         nomChamp = 'prénom';
         regexPattern = regexAlpha;
         regexErrorMessage = msgAlpha;
+    } else if (champID === 'telephone') {
+        nomChamp = 'numéro de téléphone';
+        regexPattern = regexTel;
+        regexErrorMessage = msgTel;
     } else if (champID === 'codePostal') {
         nomChamp = 'code postal';
         regexPattern = regexNum;
@@ -96,6 +102,7 @@ var setupOnBlurListeners = () => {
     var fields = [
         { id: 'nom', spanId: 'saisieNom' },
         { id: 'prenom', spanId: 'saisiePrenom' },
+        { id: 'telephone', spanId: 'saisieTelephone' }, // AJOUT DU TÉLÉPHONE
         { id: 'adresse', spanId: 'saisieAdresse' },
         { id: 'ville', spanId: 'saisieVille' },
         { id: 'codePostal', spanId: 'saisieCodePostal' },
@@ -135,6 +142,7 @@ function verification(event) {
     var civilite = document.getElementById("civilite").value;
     var nom = document.getElementById("nom").value.trim();
     var prenom = document.getElementById("prenom").value.trim();
+    var telephone = document.getElementById("telephone").value.trim(); // RÉCUPÉRATION DU TÉLÉPHONE
     var adresse = document.getElementById("adresse").value.trim();
     var ville = document.getElementById("ville").value.trim(); 
     var codePostal = document.getElementById("codePostal").value.trim();
@@ -162,6 +170,7 @@ function verification(event) {
     // ***************************************************************
     console.log("--- Récupération des données du formulaire ---");
     console.log("Nom complet : " + nom + " " + prenom);
+    console.log("Téléphone : " + telephone); // AFFICHAGE DU TÉLÉPHONE
     console.log("Adresse : " + adresse + ", " + ville + " " + codePostal);
     console.log("Abonnement Newsletter : " + abonnementNews);
     console.log("----------------------------------------------");
@@ -215,6 +224,7 @@ function verification(event) {
     // 1. Validation de TOUS les champs obligatoires (les fonctions d'aide mettent à jour estValide et messageErreur)
     validerChamp(nom, 'nom', 'saisieNom', regexAlpha, msgAlpha);
     validerChamp(prenom, 'prénom', 'saisiePrenom', regexAlpha, msgAlpha);
+    validerChamp(telephone, 'téléphone', 'saisieTelephone', regexTel, msgTel); // VALIDATION DU TÉLÉPHONE
 
     validerChamp(adresse, 'adresse', 'saisieAdresse');
     validerChamp(ville, 'ville', 'saisieVille');
@@ -282,6 +292,7 @@ function verification(event) {
                     <p><strong>Civilité:</strong> ${civilite}</p>
                     <p><strong>Nom:</strong> ${nom}</p>
                     <p><strong>Prénom:</strong> ${prenom}</p>
+                    <p><strong>Téléphone:</strong> ${telephone}</p>
                     <p><strong>Adresse:</strong> ${adresse.replace(/\n/g, '<br>')}</p>
                     <p><strong>Ville:</strong> ${ville}</p>
                     <p><strong>Code Postal:</strong> ${codePostal}</p>
@@ -307,11 +318,13 @@ function verification(event) {
         alert("ATTENTION: Veuillez corriger les erreurs suivantes :\n\n" + messageErreur);
         
         // 2. Déclencher un focus sur le premier champ invalide pour guider l'utilisateur
-        // La fonction afficheOubli est déjà capable de faire le travail de focus.
+        // Mise à jour de la séquence de focus pour inclure le téléphone
         if (document.getElementById("nom").value.trim() === "" || !regexAlpha.test(document.getElementById("nom").value.trim())) {
             document.getElementById("nom").focus();
         } else if (document.getElementById("prenom").value.trim() === "" || !regexAlpha.test(document.getElementById("prenom").value.trim())) {
             document.getElementById("prenom").focus();
+        } else if (document.getElementById("telephone").value.trim() === "" || !regexTel.test(document.getElementById("telephone").value.trim())) {
+            document.getElementById("telephone").focus();
         } else if (document.getElementById("adresse").value.trim() === "") {
             document.getElementById("adresse").focus();
         } else if (document.getElementById("ville").value.trim() === "") {
