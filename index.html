@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 	
 	<head>
-		<!-- L'icône NAO est déplacée dans le répertoire images/ -->
 		<link rel="icon" type="image/png" href="images/nao.png">
 		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Contact : Robot NOA</title>
-        <!-- LIAISON AVEC LA FEUILLE DE STYLE CORRIGÉE : styles.css -->
-        <link rel="stylesheet" href="css/styles.css">
+        <!-- LIAISON AVEC LA FEUILLE DE STYLE CORRIGÉE : styles.css -->
+        <link rel="stylesheet" href="css/styles.css">
 	</head>
 
 	<body>	
 
 		<header>
-				<!-- Le logo est déplacé dans le répertoire images/ -->
 				<img src="images/logo.PNG" alt="Ceci est le logo du lycée">
 				<h1> Site de ressources et d'informations sur NAO </h1>
 
@@ -37,7 +35,8 @@
 		</nav>
 		
 		<section>
-			<form id="contact" enctype="text/plain">
+            <!-- CORRECTION CRITIQUE : Interception de l'événement de soumission sur la balise <form> -->
+			<form id="contact" onsubmit="verification(event)" enctype="text/plain">
 			<h2>Formulaire de Contact</h2>
 			
 			<div>
@@ -90,7 +89,8 @@
 				<input type="radio" name="profession" value="enseignant" checked />Enseignant
 			</div>
 			<div>
-				<input type="submit" value="Envoyer" onclick="verification()" />
+                <!-- CORRECTION CRITIQUE : Suppression de l'onclick. La soumission est gérée par la balise <form> -->
+				<input type="submit" value="Envoyer" /> 
 				<input type="reset" value="Réinitialiser" />
 			</div>
 			</form>
