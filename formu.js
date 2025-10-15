@@ -67,7 +67,8 @@ function verification(event) {
     // --- PARTIE STRUCTURES DE TESTS (if) ET VALIDATION ---
     
     var estValide = true;
-    var messageErreur = "Erreurs de saisie :\n";
+    var messageErreur = ""; // On commence sans le titre pour le pop-up
+    var formContainer = document.getElementById('contact');
 
     /**
      * Fonction d'aide pour la validation des champs de texte et l'affichage d'erreur local (dans le span).
@@ -94,8 +95,7 @@ function verification(event) {
         return valid;
     };
     
-    // Cache le message d'erreur global avant de recommencer la validation
-    var formContainer = document.getElementById('contact');
+    // Suppression du message d'erreur global (qui n'est plus utilisé)
     var errorDiv = document.getElementById('global-error-message');
     if (errorDiv) {
         errorDiv.remove();
@@ -129,15 +129,15 @@ function verification(event) {
     console.log("--- Résultat de la validation ---");
     console.log("Est valide : " + estValide);
     if (!estValide) {
-        console.error(messageErreur);
+        console.error("Erreurs de saisie :\n" + messageErreur);
     }
     console.log("-----------------------------------");
     // ***************************************************************
 
-    // --- LOGIQUE D'AFFICHAGE DU RÉCAPITULATIF (window.open) ---
+    // --- LOGIQUE D'AFFICHAGE DU RÉCAPITULATIF OU DE L'ERREUR (window.open) ---
     
     if (estValide) {
-        // Construction du contenu HTML pour la nouvelle fenêtre
+        // Construction du contenu HTML pour la fenêtre de récapitulatif
         var contenuRecap = `
             <!DOCTYPE html>
             <html lang="fr">
@@ -184,47 +184,57 @@ function verification(event) {
             </html>
         `;
 
-        // Utiliser la méthode open() de la classe window
-        // Dimensions utilisées: width=400, height=1500
+        // Affichage du récapitulatif
         var nouvelleFenetre = window.open("", "RecapitulatifNao", "width=400,height=1500,scrollbars=yes,resizable=yes");
-        
-        // Écrire le contenu dans la nouvelle fenêtre
         nouvelleFenetre.document.write(contenuRecap);
         nouvelleFenetre.document.close();
         
     } else {
-        // Si la validation échoue, afficher le message d'erreur dans le DOM
-        console.error(messageErreur);
+        // --- LOGIQUE D'AFFICHAGE DE L'ERREUR DANS UNE NOUVELLE FENÊTRE (Pop-up) ---
         
-        // Créer un div de message d'erreur temporaire (remplace le pop-up pour une meilleure UX)
-        var messageAlerteDOM = document.createElement('div');
-        messageAlerteDOM.id = 'global-error-message';
-        messageAlerteDOM.style.color = 'red';
-        messageAlerteDOM.style.fontWeight = 'normal'; // Retire le bold pour la liste
-        messageAlerteDOM.style.border = '1px solid red';
-        messageAlerteDOM.style.padding = '10px';
-        messageAlerteDOM.style.marginBottom = '15px';
+        // 1. Construction du contenu HTML pour la fenêtre d'erreur
+        var contenuErreur = `
+            <!DOCTYPE html>
+            <html lang="fr">
+            <head>
+                <title>Erreurs de Saisie</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; background-color: #ffe6e6; }
+                    .erreur {
+                        padding: 15px; border: 1px solid red; border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-color: white;
+                    }
+                    h2 { color: #cc0000; border-bottom: 2px solid #ffcccc; padding-bottom: 10px; }
+                    p { white-space: pre-wrap; margin: 10px 0; font-weight: bold; }
+                    button {
+                        margin-top: 15px; padding: 10px 15px; background-color: #cc0000; 
+                        color: white; border: none; border-radius: 5px; cursor: pointer;
+                        transition: background-color 0.2s;
+                    }
+                    button:hover { background-color: #990000; }
+                </style>
+            </head>
+            <body>
+                <div class="erreur">
+                    <h2>ATTENTION: Erreurs de Saisie</h2>
+                    <p>${messageErreur}</p>
+                    <button onclick="window.close()">Fermer cette notification</button>
+                </div>
+            </body>
+            </html>
+        `;
 
-        // --- CORRECTION: Afficher la liste des erreurs dans le DOM ---
-        var listeErreursHTML = messageErreur.replace(/\n/g, '<br>');
-        messageAlerteDOM.innerHTML = `<strong>ATTENTION: Veuillez corriger les erreurs suivantes :</strong><br>${listeErreursHTML}`;
-        // -----------------------------------------------------------
+        // 2. Affichage de l'erreur dans une petite fenêtre
+        var fenetreErreur = window.open("", "ErreursSaisie", "width=400,height=350,resizable=no,scrollbars=no");
+        fenetreErreur.document.write(contenuErreur);
+        fenetreErreur.document.close();
         
-        // Trouver l'endroit pour insérer: après le h2 du formulaire
-        var elementH2 = formContainer.querySelector('h2');
-        if (elementH2) {
-            formContainer.insertBefore(messageAlerteDOM, elementH2.nextSibling);
-        } else {
-            formContainer.insertBefore(messageAlerteDOM, formContainer.firstChild); 
-        }
-        
-        // Déclencher un focus sur le premier champ invalide (utilisant l'ordre de la validation)
+        // 3. Déclencher un focus sur le premier champ invalide pour guider l'utilisateur
         if (!validerChamp(nom, 'nom', 'saisieNom')) document.getElementById("nom").focus();
         else if (!validerChamp(prenom, 'prénom', 'saisiePrenom')) document.getElementById("prenom").focus();
         else if (!validerChamp(adresse, 'adresse', 'saisieAdresse')) document.getElementById("adresse").focus();
         else if (!validerChamp(ville, 'ville', 'saisieVille')) document.getElementById("ville").focus();
         else if (!validerChamp(codePostal, 'code postal', 'saisieCodePostal')) document.getElementById("codePostal").focus();
-        // Si l'abonnement est coché et l'email est vide
         else if (abonnementNews === "Oui" && document.getElementById("adresseMail").value.trim() === "") document.getElementById("adresseMail").focus();
     }
 }
