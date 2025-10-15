@@ -1,15 +1,16 @@
 /* ----------------------------------------------------------------
     REFONTE ESTHÉTIQUE : Thème Sombre Officiel - Style GOUV.FR
     Basé sur la charte graphique de l'État français (Bleu République) avec un fond sombre.
+    -> V2: Amélioration massive de la LISIBILITÉ et du CONTRASTE.
 ---------------------------------------------------------------- */
 
 :root {
   /* Définition des variables de couleurs pour un look GOUV.FR en sombre */
-  --color-dark: #171725;          /* Fond très foncé/Noir subtil (base) */
-  --color-light: #f9fafb;         /* Blanc cassé (texte principal) */
+  --color-dark: #242436;          /* Nouveau Fond principal plus clair pour meilleur contraste (base) */
+  --color-light: #ffffff;         /* Blanc pur pour la lisibilité du texte principal */
   --color-accent: #000091;        /* Bleu République */
-  --color-secondary-bg: #212534;  /* Gris foncé Institutionnel (sections, nav) */
-  --color-border: #4f5b72;        /* Gris bleu pour les bordures */
+  --color-secondary-bg: #131a28;  /* Fond des sections plus sombre (crée un meilleur contraste avec le body) */
+  --color-border: #6a7b95;        /* Gris bleu pour les bordures, rendu plus visible */
   --color-highlight: #e1000f;     /* Rouge (pour les erreurs) */
   --nav-width: 200px;
 }
@@ -84,11 +85,11 @@ a {
   padding: 15px 20px; 
   transition: all 0.3s ease; 
   display: block;
-  border-bottom: 1px solid var(--color-secondary-bg); /* Séparateur discret */
+  border-bottom: 1px solid var(--color-dark); /* Séparateur avec le fond du body (plus contrasté) */
 }
 
 a:hover, a:focus {
-  background-color: var(--color-dark); /* Fond très sombre au survol */
+  background-color: var(--color-dark); /* Fond du body au survol */
   color: var(--color-accent);  /* Texte en Bleu République au survol */
   text-decoration: none; 
   border-left: 5px solid var(--color-accent); /* Indicateur actif/survol officiel */
@@ -206,6 +207,7 @@ input[type="text"], input[type="tel"], textarea, select {
     padding: 10px;
     border: 1px solid var(--color-border); 
     border-radius: 2px;
+    /* CHANGEMENT CLÉ : utilise un fond contrasté avec la section */
     background-color: var(--color-dark); 
     color: var(--color-light);
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -243,7 +245,7 @@ input[type="reset"] {
 }
 
 input[type="reset"]:hover {
-    background-color: #6b7280;
+    background-color: #94a3b8; /* Gris légèrement plus clair au survol */
 }
 
 /* Style des spans d'erreur */
