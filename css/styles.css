@@ -1,45 +1,68 @@
 /* ----------------------------------------------------------------
-    FEUILLE DE STYLE INITIALE (BASE NEUTRE)
-    Ceci est la feuille de style réinitialisée, prête à recevoir vos règles.
+    FEUILLE DE STYLE INITIALE (THÈME SOMBRE)
+    Ceci est la feuille de style réinitialisée avec un thème sombre de base.
 ---------------------------------------------------------------- */
+
+/* Variables pour le thème sombre (facilite les changements) */
+:root {
+    --color-background: #1e1e1e; /* Fond principal très sombre */
+    --color-surface: #2d2d2d;    /* Fond des sections/formulaires */
+    --color-text: #f0f0f0;       /* Texte clair */
+    --color-border: #444444;     /* Bordures sombres et discrètes */
+    --color-accent: #3498db;     /* Bleu accent pour les liens/focus */
+    --color-error: #e74c3c;      /* Rouge pour les erreurs */
+}
 
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f0f0f0; /* Fond clair par défaut */
-    color: #333; /* Texte sombre par défaut */
+    background-color: var(--color-background); 
+    color: var(--color-text); 
 }
 
-/* Base Formulaire */
+/* Base Formulaire et Sections */
 form div {
     margin-bottom: 15px;
+    padding: 10px;
+    background-color: var(--color-surface); /* Pour faire ressortir les champs */
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
 }
 
 label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: var(--color-text);
 }
 
 /* Base pour la mise en page simple */
 @media (min-width: 600px) {
     form div:not(:last-child) {
         display: flex;
-        align-items: flex-start; /* Alignement en haut des éléments */
+        align-items: center; /* Alignement centré */
     }
     label {
         min-width: 150px; 
         margin-right: 15px;
         margin-bottom: 0;
-        padding-top: 8px; /* Petite marge pour l'alignement avec les inputs */
     }
     input[type="text"], input[type="tel"], input[type="email"], input[type="number"], textarea, select {
         flex-grow: 1;
         padding: 8px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--color-border);
         border-radius: 4px;
+        background-color: var(--color-background); /* Champ sur fond très sombre */
+        color: var(--color-text);
+        transition: border-color 0.3s;
     }
+    /* Feedback visuel au focus */
+    input[type="text"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+        border-color: var(--color-accent);
+        outline: none;
+    }
+
     textarea {
         height: 80px; /* Hauteur par défaut pour une meilleure visibilité */
     }
@@ -49,8 +72,37 @@ label {
 /* Style des spans d'erreur */
 span[id^="saisie"] {
     display: block;
-    color: red; 
+    color: var(--color-error); 
     font-size: 0.9em;
     font-style: italic;
     margin-top: 5px;
+}
+
+/* Style des boutons pour le thème sombre */
+input[type="submit"], input[type="reset"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+
+input[type="submit"] {
+    background-color: var(--color-accent); 
+    color: var(--color-text);
+}
+
+input[type="submit"]:hover {
+    background-color: #2980b9; /* Nuance plus foncée de l'accent */
+}
+
+input[type="reset"] {
+    background-color: var(--color-border);
+    color: var(--color-text);
+}
+
+input[type="reset"]:hover {
+    background-color: #666666;
 }
