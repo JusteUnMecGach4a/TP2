@@ -214,13 +214,13 @@ input[type="reset"]:hover {
 /* --- PIED DE PAGE (FOOTER) --- */
 footer {
     background-color: var(--color-surface);
-    color: var(--color-border); /* Couleur du texte légèrement estompée */
+    color: var(--color-text); /* CHANGEMENT : Utilise le blanc pour une meilleure lisibilité */
     text-align: center;
     padding: 15px 20px;
     margin-top: 40px;
     border-top: 1px solid var(--color-border);
     border-radius: 8px;
-    font-size: 0.9em;
+    font-size: 1em; /* CHANGEMENT : Taille de police augmentée pour la lecture */
 }
 
 footer p {
