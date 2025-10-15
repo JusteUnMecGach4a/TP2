@@ -200,12 +200,15 @@ function verification(event) {
         var messageAlerteDOM = document.createElement('div');
         messageAlerteDOM.id = 'global-error-message';
         messageAlerteDOM.style.color = 'red';
-        messageAlerteDOM.style.fontWeight = 'bold';
+        messageAlerteDOM.style.fontWeight = 'normal'; // Retire le bold pour la liste
         messageAlerteDOM.style.border = '1px solid red';
         messageAlerteDOM.style.padding = '10px';
         messageAlerteDOM.style.marginBottom = '15px';
 
-
+        // --- CORRECTION: Afficher la liste des erreurs dans le DOM ---
+        var listeErreursHTML = messageErreur.replace(/\n/g, '<br>');
+        messageAlerteDOM.innerHTML = `<strong>ATTENTION: Veuillez corriger les erreurs suivantes :</strong><br>${listeErreursHTML}`;
+        // -----------------------------------------------------------
         
         // Trouver l'endroit pour insérer: après le h2 du formulaire
         var elementH2 = formContainer.querySelector('h2');
@@ -214,7 +217,6 @@ function verification(event) {
         } else {
             formContainer.insertBefore(messageAlerteDOM, formContainer.firstChild); 
         }
-        messageAlerteDOM.textContent = "ATTENTION: Veuillez corriger les erreurs de saisie ci-dessous.";
         
         // Déclencher un focus sur le premier champ invalide (utilisant l'ordre de la validation)
         if (!validerChamp(nom, 'nom', 'saisieNom')) document.getElementById("nom").focus();
